@@ -75,8 +75,23 @@
     gcc
     htop
     mesa
+    sddm-chili-theme
+    source-code-pro
+    ripgrep
   ];
 
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+    nerdfonts
+  ];
   services.openssh.enable = true;
   system.copySystemConfiguration = true;
   system.stateVersion = "23.11"; # Did you read the comment?

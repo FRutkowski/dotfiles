@@ -26,10 +26,14 @@
     	docker
 	nodejs
 	neovide
-        latte-dock
         cinnamon.nemo
+        kitty
      ];
+
    };
 
+   programs.kitty.font.name = "CommicShannsMono Nerd Font";
+   programs.kitty.font.size = "12";
+   programs.kitty.theme = "Apprentice";
 }
 
