@@ -1,57 +1,88 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+{ pkgs, username, ... }: {
 
-{ config, lib, pkgs, ... }:
-
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./nvidia.nix
-      ./users.nix
-    ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Network
-  networking.hostName = "x-wing123";
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "Europe/Warsaw";
-
-  services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.xkb.layout = "pl";
-  services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      # Add additional package names here
-      "nvidia"
-      "nvidia-x11"
-      "nvidia-settings"
-      "vscode"
-      "idea-ultimate"
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+    ./audio.nix
+    # ./gnome.nix
+    ./hyprland.nix
+    ./laptop.nix
+    ./locale.nix
   ];
 
-  # Enable sound.
-# rtkit is optional but recommended
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+  # nix
+  documentation.nixos.enable = false; # .desktop
+  nixpkgs.config.allowUnfree = true;
+  nix = {
+    settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+    };
+  };
+
+  # virtualisation
+  # programs.virt-manager.enable = true;
+  # virtualisation = {
+  #   podman.enable = true;
+  #   libvirtd.enable = true;
+  # };
+
+  # dconf
+  programs.dconf.enable = true;
+
+  # packages
+  environment.systemPackages = with pkgs; [
+    home-manager
+    neovim
+    git
+    wget
+    flatpak
+  ];
+
+  # services
+  services = {
+    xserver = {
+      enable = true;
+      excludePackages = [ pkgs.xterm ];
+    };
+    printing.enable = true;
+    flatpak.enable = true;
+  };
+
+  # services.xserver.displayManager.sddm.enable = true;
+  # logind
+  # services.logind.extraConfig = ''
+  #   HandlePowerKey=ignore
+  #   HandleLidSwitch=suspend
+  #   HandleLidSwitchExternalPower=ignore
+  # '';
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+  ];
+
+  # kde connect
+  networking.firewall = rec {
+    allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+  };
+
+  # user
+  users.users.${username} = {
+    isNormalUser = true;
+    description = "Filip Rutkowski";
+    initialPassword = "haslo";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "video"
+    ];
+  };
+
+  # network
+  networking = {
+    hostName = "x-wing123";
+    networkmanager.enable = true;
   };
 
   # bluetooth
@@ -61,40 +92,27 @@
     settings.General.Experimental = true; # for gnome-bluetooth percentage
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  # bootloader
+  boot = {
+    tmp.cleanOnBoot = true;
+    supportedFilesystems = [ "ntfs" ];
+    loader = {
+      timeout = 2;
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    plymouth = rec {
+      enable = true;
+      # black_hud circle_hud cross_hud square_hud
+      # circuit connect cuts_alt seal_2 seal_3
+      theme = "circle_hud";
+      themePackages = with pkgs; [(
+        adi1090x-plymouth-themes.override {
+          selected_themes = [ theme ];
+        }
+      )];
+    };
+  };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    git
-    wget
-    neovim
-    gcc
-    htop
-    mesa
-    sddm-chili-theme
-    source-code-pro
-    ripgrep
-  ];
-
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
-    nerdfonts
-  ];
-  services.openssh.enable = true;
-  system.copySystemConfiguration = true;
-  system.stateVersion = "23.11"; # Did you read the comment?
-
+  system.stateVersion = "23.05";
 }
-
