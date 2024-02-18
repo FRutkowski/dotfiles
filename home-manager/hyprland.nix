@@ -60,7 +60,7 @@ in
         kb_model = "pc104";
         follow_mouse = 1;
         touchpad = {
-          natural_scroll = "yes";
+          natural_scroll = "no";
           disable_while_typing = true;
           drag_lock = true;
         };

@@ -50,11 +50,11 @@
 
   # services.xserver.displayManager.sddm.enable = true;
   # logind
-  # services.logind.extraConfig = ''
-  #   HandlePowerKey=ignore
-  #   HandleLidSwitch=suspend
-  #   HandleLidSwitchExternalPower=ignore
-  # '';
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+    HandleLidSwitch=suspend
+    HandleLidSwitchExternalPower=ignore
+  '';
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
