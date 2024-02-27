@@ -22,6 +22,7 @@
     github-desktop
     gimp
     discord
+    musescore
     bottles
     icon-library
     dconf-editor

@@ -24,6 +24,7 @@ return require('packer').startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'rafamadriz/friendly-snippets'
   use 'windwp/nvim-autopairs'
+  use 'folke/neoconf.nvim'
   use {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',

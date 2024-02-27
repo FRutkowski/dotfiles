@@ -1,6 +1,21 @@
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'volar', 'tailwindcss', 'eslint' }
+  ensure_installed = { 'lua_ls', 'volar', 'tailwindcss', 'eslint', 'tsserver' }
+})
+
+local lspconfig = require('lspconfig')
+
+require('mason-lspconfig').setup_handlers({
+  function(server_name)
+    local server_config = {}
+    if require("neoconf").get(server_name .. ".disable") then
+      return
+    end
+    if server_name == "volar" then
+        server_config.filetypes = { 'vue', 'typescript', 'javascript' }
+    end
+    lspconfig[server_name].setup(server_config)
+  end,
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
