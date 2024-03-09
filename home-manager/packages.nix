@@ -28,6 +28,7 @@
     dconf-editor
     figma-linux
     vscode
+    weka
 
     # tools
     bat
@@ -45,6 +46,7 @@
     zip
     unzip
     glib
+    openjdk11
 
     # hyprland
     wl-gammactl

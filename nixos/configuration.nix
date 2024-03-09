@@ -4,7 +4,7 @@
     /etc/nixos/hardware-configuration.nix
     ./audio.nix
     # ./gnome.nix
-    ./hyprland.nix
+    # ./hyprland.nix
     ./laptop.nix
     ./locale.nix
   ];
@@ -48,17 +48,21 @@
     flatpak.enable = true;
   };
 
-  # services.xserver.displayManager.sddm.enable = true;
-  # logind
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    HandleLidSwitch=suspend
-    HandleLidSwitchExternalPower=ignore
-  '';
+  # KDE
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
+  # logind
+  # hyprland
+  # services.logind.extraConfig = ''
+  #   HandlePowerKey=ignore
+  #   HandleLidSwitch=suspend
+  #   HandleLidSwitchExternalPower=ignore
+  # '';
+
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "electron-25.9.0"
+  # ];
 
   # kde connect
   networking.firewall = rec {
