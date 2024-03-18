@@ -1,17 +1,18 @@
-{ pkgs, username, ... }: {
+{ pkgs, username, hostname, ... }: {
 
   imports = [
     /etc/nixos/hardware-configuration.nix
     ./audio.nix
-    # ./gnome.nix
-    # ./hyprland.nix
-    ./laptop.nix
     ./locale.nix
+    # ./gnome.nix
+    ./hyprland.nix
+    ./laptop.nix
   ];
 
   # nix
   documentation.nixos.enable = false; # .desktop
   nixpkgs.config.allowUnfree = true;
+  # programs.java = { enable = true; package = pkgs.jdk11; };
   nix = {
     settings = {
       experimental-features = "nix-command flakes";
@@ -20,11 +21,11 @@
   };
 
   # virtualisation
-  # programs.virt-manager.enable = true;
-  # virtualisation = {
-  #   podman.enable = true;
-  #   libvirtd.enable = true;
-  # };
+  programs.virt-manager.enable = true;
+  virtualisation = {
+    podman.enable = true;
+    libvirtd.enable = true;
+  };
 
   # dconf
   programs.dconf.enable = true;
@@ -35,7 +36,6 @@
     neovim
     git
     wget
-    flatpak
   ];
 
   # services
@@ -48,21 +48,12 @@
     flatpak.enable = true;
   };
 
-  # KDE
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
   # logind
-  # hyprland
-  # services.logind.extraConfig = ''
-  #   HandlePowerKey=ignore
-  #   HandleLidSwitch=suspend
-  #   HandleLidSwitchExternalPower=ignore
-  # '';
-
-  # nixpkgs.config.permittedInsecurePackages = [
-  #   "electron-25.9.0"
-  # ];
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+    HandleLidSwitch=suspend
+    HandleLidSwitchExternalPower=ignore
+  '';
 
   # kde connect
   networking.firewall = rec {
@@ -73,19 +64,20 @@
   # user
   users.users.${username} = {
     isNormalUser = true;
-    description = "Filip Rutkowski";
-    initialPassword = "haslo";
+    initialPassword = username;
     extraGroups = [
-      "wheel"
+      "nixosvmtest"
       "networkmanager"
+      "wheel"
       "audio"
       "video"
+      "libvirtd"
     ];
   };
 
   # network
   networking = {
-    hostName = "x-wing123";
+    hostName = hostname;
     networkmanager.enable = true;
   };
 
@@ -109,7 +101,7 @@
       enable = true;
       # black_hud circle_hud cross_hud square_hud
       # circuit connect cuts_alt seal_2 seal_3
-      theme = "circle_hud";
+      theme = "connect";
       themePackages = with pkgs; [(
         adi1090x-plymouth-themes.override {
           selected_themes = [ theme ];

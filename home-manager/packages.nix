@@ -22,13 +22,14 @@
     github-desktop
     gimp
     discord
-    musescore
     bottles
     icon-library
     dconf-editor
     figma-linux
     vscode
     weka
+    kitty
+    jetbrains.idea-ultimate
 
     # tools
     bat
@@ -46,7 +47,9 @@
     zip
     unzip
     glib
-    openjdk11
+    jdk11
+    htop
+    nix-ld
 
     # hyprland
     wl-gammactl
@@ -60,6 +63,7 @@
     pavucontrol
     brightnessctl
     swww
+
 
     # fun
     glow
@@ -76,7 +80,6 @@
     bun
     cargo
     go
-    gcc
     pnpm
     typescript
     eslint

@@ -12,10 +12,10 @@ in
     ./git.nix
     ./helix.nix
     ./hyprland.nix
+    ./hyprshade.nix
     ./lf.nix
-    ./kitty.nix
-    ./mimelist.nix
     ./neofetch.nix
+    ./kitty.nix
     ./neovim.nix
     ./packages.nix
     ./sh.nix
