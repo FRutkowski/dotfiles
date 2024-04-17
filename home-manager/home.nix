@@ -4,15 +4,15 @@ let
 in
 {
   imports = [
-    ./ags.nix
+    # ./ags.nix
     ./blackbox.nix
     ./browser.nix
     ./bspwm.nix
     ./dconf.nix
     ./git.nix
     ./helix.nix
-    ./hyprland.nix
-    ./hyprshade.nix
+    # ./hyprland.nix
+    # ./hyprshade.nix
     ./lf.nix
     ./neofetch.nix
     ./kitty.nix
@@ -21,7 +21,7 @@ in
     ./sh.nix
     ./starship.nix
     ./stm.nix
-    ./sway.nix
+    # ./sway.nix
     ./theme.nix
     ./tmux.nix
     ./wezterm.nix

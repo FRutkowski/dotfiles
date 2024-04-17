@@ -4,7 +4,7 @@
 
   programs.kitty.settings = {
     font_family = "Mononoki Nerd Font Bold";
-    font_size = "20.0";
+    font_size = "15.0";
 
     adjust_line_height = "100%";
     disable_ligatures = "cursor";

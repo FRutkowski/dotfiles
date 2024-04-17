@@ -26,8 +26,8 @@
     icon-library
     dconf-editor
     figma-linux
-    vscode
     weka
+    vscodium
     kitty
     jetbrains.idea-ultimate
 

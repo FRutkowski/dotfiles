@@ -5,7 +5,7 @@
     ./audio.nix
     ./locale.nix
     # ./gnome.nix
-    ./hyprland.nix
+    # ./hyprland.nix
     ./laptop.nix
   ];
 
@@ -30,6 +30,11 @@
   # dconf
   programs.dconf.enable = true;
 
+  
+  # neovim for root paths
+  # nvim-path = "../nvim";
+  # nvim-destination = "/root/.config/nvim";
+
   # packages
   environment.systemPackages = with pkgs; [
     home-manager
@@ -37,6 +42,23 @@
     git
     wget
   ];
+
+  # copying nvim
+  # copyFolderToRoot = {
+  #   src = nvim-path;
+  #   dest = nvim-destination;
+  # };
+
+  # Kopiowanie folderu do korzenia systemu
+  #environment.systemPackages = with pkgs; [
+  #  (writeTextFile {
+  #    name = "copy-folder-to-root";
+  #    text = ''
+  #      mkdir -p ${nvim-destination}
+  #      cp -r ${nvim-path}/* ${nvim-destination}
+  #    '';
+  #  })
+  #];
 
   # services
   services = {
@@ -49,17 +71,21 @@
   };
 
   # logind
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    HandleLidSwitch=suspend
-    HandleLidSwitchExternalPower=ignore
-  '';
+  # services.logind.extraConfig = ''
+  #   HandlePowerKey=ignore
+  #   HandleLidSwitch=suspend
+  #   HandleLidSwitchExternalPower=ignore
+  # '';
 
   # kde connect
   networking.firewall = rec {
     allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
     allowedUDPPortRanges = allowedTCPPortRanges;
   };
+
+  # kde plasma
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # user
   users.users.${username} = {
