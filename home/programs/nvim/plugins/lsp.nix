@@ -13,7 +13,8 @@
         };
         tailwindcss.enable = true;
         html.enable = true;
-        svelte.enable = true;
+        volar.enable = true;
+        pylsp.enable = true;
         marksman.enable = true;
       };
       keymaps.lspBuf = {
@@ -41,6 +42,8 @@
           shfmt.enable = true;
           golines.enable = true;
           gofumpt.enable = true;
+          black.enable = true;
+          prettier.enable = true;
         };
       };
     };

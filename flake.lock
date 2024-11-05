@@ -865,22 +865,6 @@
         "type": "github"
       }
     },
-    "nixos-hardware": {
-      "locked": {
-        "lastModified": 1730161780,
-        "narHash": "sha256-z5ILcmwMtiCoHTXS1KsQWqigO7HJO8sbyK7f7wn9F/E=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "07d15e8990d5d86a631641b4c429bc0a7400cfb8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixos-hardware",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1727348695,
@@ -1153,7 +1137,6 @@
         "hyprpolkitagent": "hyprpolkitagent",
         "hyprspace": "hyprspace",
         "hyprsunset": "hyprsunset",
-        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_7",
         "nixvim": "nixvim",
         "nixy-wallpapers": "nixy-wallpapers",

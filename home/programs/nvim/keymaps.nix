@@ -73,7 +73,7 @@
         options.desc = "Oil";
       }
       {
-        key = "<leader>E";
+        key = "<leader>n";
         action = "<cmd>Neotree toggle<cr>";
         options.desc = "Neotree";
       }

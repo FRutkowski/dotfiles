@@ -4,8 +4,8 @@
       "$mod,RETURN, exec, ${pkgs.kitty}/bin/kitty" # Kitty
       "$mod,E, exec, ${pkgs.xfce.thunar}/bin/thunar" # Thunar
       "$mod,B, exec, ${pkgs.qutebrowser}/bin/qutebrowser" # Qutebrowser
-      "$mod,K, exec, ${pkgs.bitwarden}/bin/bitwarden" # Bitwarden
-      "$mod,L, exec, ${pkgs.hyprlock}/bin/hyprlock" # Lock
+      "$shiftMod,K, exec, ${pkgs.bitwarden}/bin/bitwarden" # Bitwarden
+      "$shiftMod,L, exec, ${pkgs.hyprlock}/bin/hyprlock" # Lock
       "$mod,X, exec, powermenu" # Powermenu
       "$mod,SPACE, exec, menu" # Launcher
       "$mod,C, exec, quickmenu" # Quickmenu
@@ -15,10 +15,10 @@
       "$mod,Q, killactive," # Close window
       "$mod,T, togglefloating," # Toggle Floating
       "$mod,F, fullscreen" # Toggle Fullscreen
-      "$mod,left, movefocus, l" # Move focus left
-      "$mod,right, movefocus, r" # Move focus Right
-      "$mod,up, movefocus, u" # Move focus Up
-      "$mod,down, movefocus, d" # Move focus Down
+      "$mod,H, movefocus, l" # Move focus left
+      "$mod,L, movefocus, r" # Move focus Right
+      "$mod,K, movefocus, u" # Move focus Up
+      "$mod,J, movefocus, d" # Move focus Down
       "$shiftMod,up, focusmonitor, -1" # Focus previous monitor
       "$shiftMod,down, focusmonitor, 1" # Focus next monitor
       "$shiftMod,left, layoutmsg, addmaster" # Add to master

@@ -49,6 +49,9 @@
       bitwarden # Password manager
       vlc # Video player
       blanket # White-noise app
+      tidal-hifi
+      pavucontrol
+      telegram-desktop
 
       # Dev
       go
