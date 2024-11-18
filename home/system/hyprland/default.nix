@@ -22,8 +22,16 @@ in {
     hyprpicker
     swappy
     imv
-    wf-recorder
+    #wf-recorder
     wlr-randr
+
+    libpng
+    pango
+    cairo
+    file
+    libglvnd
+    libwebp
+
     wl-clipboard
     brightnessctl
     gnome-themes-extra
@@ -110,10 +118,15 @@ in {
       decoration = {
         active_opacity = active-opacity;
         inactive_opacity = inactive-opacity;
-        rounding = rounding;
+        inherit rounding;
         drop_shadow = true;
         shadow_range = 20;
         shadow_render_power = 3;
+        #shadow = {
+        #  enabled = false;
+        #  range = 20;
+        #  render_power = 3;
+        #};
         blur = { enabled = if blur then "true" else "false"; };
       };
 

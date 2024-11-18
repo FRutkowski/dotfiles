@@ -13,7 +13,10 @@
         };
         tailwindcss.enable = true;
         html.enable = true;
-        volar.enable = true;
+        volar = {
+          enable = true;
+          filetypes = [ "typescript" "vue" "javascript" ];
+        };
         pylsp.enable = true;
         marksman.enable = true;
       };

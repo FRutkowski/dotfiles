@@ -2,7 +2,8 @@
 { config, ... }:
 let
   foreground = "rgba(216, 222, 233, 0.70)";
-  imageStr = toString config.stylix.image;
+  #imageStr = toString config.stylix.image;
+  imageStr = "/home/filip/Pictures/wallpapers/wallpapers";
   font = config.stylix.fonts.serif.name;
 in {
   programs.hyprlock = {
@@ -14,6 +15,7 @@ in {
         disable_loading_bar = false;
       };
 
+      #trace "iimage str" imageStr;
       # BACKGROUND
       background = {
         monitor = "";

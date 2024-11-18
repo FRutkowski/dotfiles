@@ -35,6 +35,8 @@ in {
       bindkey -M emacs '\es' sesh-sessions
       bindkey -M vicmd '\es' sesh-sessions
       bindkey -M viins '\es' sesh-sessions
+      bindkey '^[[1;5C' forward-word
+      bindkey '^[[1;5D' backward-word
     '';
 
     history = {

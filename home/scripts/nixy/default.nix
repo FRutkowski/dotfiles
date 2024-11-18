@@ -32,6 +32,7 @@ let
           "󰋩;Wallpapers;nvim ${inputs.nixy-wallpapers}/docs/MOBILE-VIEW.md"
         )
 
+
         # Apply default icons if empty:
         for i in "''${!apps[@]}"; do
           apps[i]=$(echo "''${apps[i]}" | sed 's/^;/'$DEFAULT_ICON';/')

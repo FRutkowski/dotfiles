@@ -29,10 +29,11 @@
       inputs.hyprland.follows = "hyprland";
     };
     nixy-wallpapers = {
-      url = "github:anotherhadi/nixy-wallpapers";
+      url = "github:FRutkowski/wallpapers";
       flake = false;
     };
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url =
+      "git+https://github.com/hyprwm/Hyprland?ref=main&rev=e3882b23d09aad7f5c3a708536c87b062f3b0d8d";
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     hyprsunset.url = "github:hyprwm/hyprsunset";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";

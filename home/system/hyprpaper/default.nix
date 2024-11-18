@@ -7,6 +7,9 @@
       ipc = "on";
       splash = false;
       splash_offset = 2.0;
+      # preload = [ "/home/filip/Pictures/wallpapers/wallpapers/snow.png" ];
+      # wallpaper = [ "/home/filip/Pictures/wallpapers/wallpapers/snow.png" ];
     };
+
   };
 }

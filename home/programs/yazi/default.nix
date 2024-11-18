@@ -1,5 +1,5 @@
 # Yazi is a TUI file explorer
-{
+{ pkgs, ... }: {
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
