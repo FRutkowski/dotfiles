@@ -46,7 +46,8 @@ in {
         {
           "bar.customModules.updates.pollingInterval": 1440000,
           "theme.font.weight": 600,
-          "theme.bar.scaling": 95,
+          "theme.bar.scaling": 80,
+          "theme.bar.menus.menu.media.scaling": 65,
           "scalingPriority": "gdk",
           "theme.bar.menus.menu.dashboard.scaling": 80,
           "theme.osd.scaling": 80,

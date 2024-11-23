@@ -18,8 +18,8 @@
     ../../nixos/xdg-portal.nix
     ../../nixos/variables-config.nix
     ../../nixos/docker.nix
-    #../../nixos/openrazer.nix
-    #(import ../../nixos/openrazer.nix { inherit pkgs; })
+    /home/filip/.config/nixos/nixos/openrazer.nix
+    /home/filip/.config/nixos/nixos/steam.nix
 
     ../../themes/stylix/nixy.nix
 
@@ -27,8 +27,8 @@
     ./variables.nix
   ];
 
-  hardware.openrazer.enable = true;
-  environment.systemPackages = with pkgs; [ openrazer-daemon ];
+  #   hardware.openrazer.enable = true;
+  # environment.systemPackages = with pkgs; [ openrazer-daemon ];
 
   nixpkgs.config.chromium.enableWideVine = true;
   nixpkgs.overlays =

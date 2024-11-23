@@ -29,6 +29,7 @@
     #     "f2cdcd"; # Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
     # };
     base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-moon.yaml";
+    #base16Scheme = "${pkgs.base16-schemes}/share/themes/mountain.yaml";
     cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Ice";
