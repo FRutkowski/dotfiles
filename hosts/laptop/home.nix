@@ -59,6 +59,7 @@ in {
       telegram-desktop
       myChromium
       libsForQt5.gwenview
+      lf
 
       # Dev
       go
