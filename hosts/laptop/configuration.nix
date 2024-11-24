@@ -19,7 +19,6 @@
     ../../nixos/variables-config.nix
     ../../nixos/docker.nix
     /home/filip/.config/nixos/nixos/openrazer.nix
-    /home/filip/.config/nixos/nixos/steam.nix
 
     ../../themes/stylix/nixy.nix
 
