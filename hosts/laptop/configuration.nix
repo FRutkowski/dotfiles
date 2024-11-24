@@ -18,7 +18,7 @@
     ../../nixos/xdg-portal.nix
     ../../nixos/variables-config.nix
     ../../nixos/docker.nix
-    /home/filip/.config/nixos/nixos/openrazer.nix
+    ../../nixos/openrazer.nix
 
     ../../themes/stylix/nixy.nix
 
