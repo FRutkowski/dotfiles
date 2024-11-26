@@ -33,12 +33,14 @@
       flake = false;
     };
     hyprland.url =
-      "git+https://github.com/hyprwm/Hyprland?ref=main&rev=e3882b23d09aad7f5c3a708536c87b062f3b0d8d";
+      "git+https://github.com/hyprwm/Hyprland?ref=main&rev=b1003445953474b967464d4d0878955d37498647";
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     hyprsunset.url = "github:hyprwm/hyprsunset";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    stylix.url = "github:danth/stylix";
+    stylix.url =
+      "github:danth/stylix?rev=04afcfc0684d9bbb24bb1dc77afda7c1843ec93b";
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
+    nur.url = "github:nix-community/NUR";
   };
 
   outputs = inputs@{ nixpkgs, ... }: {
@@ -48,7 +50,8 @@
           system = "x86_64-linux";
           modules = [
             {
-              nixpkgs.overlays = [ inputs.hyprpanel.overlay ];
+              nixpkgs.overlays =
+                [ inputs.hyprpanel.overlay inputs.nur.overlay ];
               _module.args = { inherit inputs; };
             }
             #inputs.nixos-hardware.nixosModules. # CHANGEME: check https://github.com/NixOS/nixos-hardware

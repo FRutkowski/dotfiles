@@ -1,9 +1,9 @@
 # Hyprlock is a lockscreen for Hyprland
-{ config, ... }:
+{ config, lib, ... }:
 let
   foreground = "rgba(216, 222, 233, 0.70)";
-  #imageStr = toString config.stylix.image;
-  imageStr = "/home/filip/Pictures/wallpapers/wallpapers";
+  imageStr = toString config.stylix.image;
+  #imageStr = "/home/filip/Pictures/wallpapers/wallpapers";
   font = config.stylix.fonts.serif.name;
 in {
   programs.hyprlock = {
@@ -68,7 +68,7 @@ in {
       ];
 
       # INPUT FIELD
-      input-field = [{
+      input-field = lib.mkForce {
         monitor = "";
         size = "300, 60";
         outline_thickness = 2;
@@ -85,7 +85,7 @@ in {
         position = "0, -250";
         halign = "center";
         valign = "center";
-      }];
+      };
     };
   };
 }

@@ -88,7 +88,7 @@ in {
       cbonsai
       pipes
       cmatrix
-      cava
+      #cava
 
       vscode
       jetbrains.idea-ultimate

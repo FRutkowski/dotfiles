@@ -11,7 +11,12 @@ let
   keyboardLayout = config.var.keyboardLayout;
 in {
 
-  imports = [ ./animations.nix ./bindings.nix ./polkitagent.nix ];
+  imports = [
+    ./animations.nix
+    ./bindings.nix
+    /home/filip/.config/nixos/home/system/hyprland/hyprspace.nix
+    ./polkitagent.nix
+  ];
 
   home.packages = with pkgs; [
     qt5.qtwayland
@@ -49,8 +54,6 @@ in {
     xwayland.enable = true;
     systemd.enable = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-
-    plugins = [ inputs.hyprspace.packages.${pkgs.system}.Hyprspace ];
 
     settings = {
       "$mod" = "SUPER";
@@ -122,11 +125,11 @@ in {
         drop_shadow = true;
         shadow_range = 20;
         shadow_render_power = 3;
-        #shadow = {
-        #  enabled = false;
-        #  range = 20;
-        #  render_power = 3;
-        #};
+        # shadow = {
+        #   enabled = true;
+        #   range = 20;
+        #   render_power = 3;
+        # };
         blur = { enabled = if blur then "true" else "false"; };
       };
 

@@ -29,9 +29,9 @@
   #   hardware.openrazer.enable = true;
   # environment.systemPackages = with pkgs; [ openrazer-daemon ];
 
-  nixpkgs.config.chromium.enableWideVine = true;
-  nixpkgs.overlays =
-    [ (final: prev: { _7zz = prev._7zz.override { useUasm = true; }; }) ];
+  # nixpkgs.config.chromium.enableWideVine = true;
+  # nixpkgs.overlays =
+  #   [ (final: prev: { _7zz = prev._7zz.override { useUasm = true; }; }) ];
 
   fonts.packages = with pkgs; [
     noto-fonts
