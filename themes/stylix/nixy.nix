@@ -65,11 +65,24 @@
     polarity = "dark";
     # image = "https://plus.unsplash.com/premium_photo-1674593231084-d8b27596b134?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
     # nice snow image
+    # image = pkgs.fetchurl {
+    #   url =
+    #     "https://images.unsplash.com/photo-1487782310695-ed8583618566?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    #   sha256 = "YpkS/G2hpnzuzHsmxviwGvlARbYn7fUUFJZCtpGgcek=";
+    # };
+    #image = pkgs.fetchurl {
+    #  url =
+    #    "https://github.com/FRutkowski/wallpapers/blob/main/wallpapers/snow.png?raw=true";
+    #  sha256 = "KMNBxvCOfu3t9ACusw4E7bbxhKBGWg9+84dYuvn7nvc=";
+
+    #};
     image = pkgs.fetchurl {
       url =
-        "https://images.unsplash.com/photo-1487782310695-ed8583618566?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-      sha256 = "YpkS/G2hpnzuzHsmxviwGvlARbYn7fUUFJZCtpGgcek=";
+        "https://github.com/FRutkowski/wallpapers/blob/main/wallpapers/snow_lake.png?raw=true";
+      sha256 = "yyqb9L5S/xxgrKd44+HoqdYCwGYDadryQkhzy13pe2Y=";
+
     };
+
     #image = /home/filip/Pictures/wallpapers/wallpapers/snow.png;
     #image = ../../wallpapers/snow.png;
   };
