@@ -1,8 +1,9 @@
 { config, lib, pkgs, ... }: {
   imports = [
     ../../nixos/nvidia.nix # CHANGEME: Remove this line if you don't have an Nvidia GPU
-    ../../nixos/prime.nix # CHANGEME: Remove this line if you don't have an Nvidia GPU
-    ../../nixos/intel.nix
+    #../../nixos/prime.nix # CHANGEME: Remove this line if you don't have an Nvidia GPU
+    #../../nixos/intel.nix
+    #../../nixos/prime.nix # CHANGEME: Remove this line if you don't have an Nvidia GPU
 
     ../../nixos/audio.nix
     ../../nixos/auto-upgrade.nix
@@ -17,26 +18,20 @@
     ../../nixos/users.nix
     ../../nixos/utils.nix
     ../../nixos/xdg-portal.nix
-    ../../nixos/variables-config.nix
+    #../../nixos/variables-config.nix
     ../../nixos/docker.nix
     ../../nixos/openrazer.nix
 
     ../../themes/stylix/nixy.nix
 
     ./hardware-configuration.nix
-    ./variables.nix
+    #../common/variables.nix
+    /home/filip/.config/nixos/hosts/common/variables.nix
   ];
-
-  #   hardware.openrazer.enable = true;
-  # environment.systemPackages = with pkgs; [ openrazer-daemon ];
 
   nixpkgs.config.chromium.enableWideVine = true;
   nixpkgs.overlays =
     [ (final: prev: { _7zz = prev._7zz.override { useUasm = true; }; }) ];
-  # boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
-
-  services.openssh.enable = true;
-
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
@@ -49,13 +44,8 @@
     proggyfonts
   ];
 
-  # system.activationScripts.cleanHyprlandConfig = lib.mkAfter ''
-  #   if [ -f /home/${config.var.username}/.config/hyprland.conf ]; then
-  #     sed -i '/^col\.shadow/d' /home/${config.var.username}/.config/hyprland.conf
-  #   fi
-  # '';
-
-  home-manager.users."${config.var.username}" = import ./home.nix;
+  home-manager.users."${config.var.username}" =
+    import /home/filip/.config/nixos/hosts/common/home.nix;
   # Don't touch this
   system.stateVersion = "24.05";
 }
