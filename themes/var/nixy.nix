@@ -2,6 +2,8 @@
   rounding = 15;
   gaps-in = 10;
   gaps-out = 10 * 2;
+  #active-opacity = 0.89;
+  kitty-opacity = "0.89";
   active-opacity = 1;
   inactive-opacity = 0.89;
   blur = true;

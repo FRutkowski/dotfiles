@@ -5,6 +5,7 @@ let
   gaps-in = config.var.theme.gaps-in;
   gaps-out = config.var.theme.gaps-out;
   active-opacity = config.var.theme.active-opacity;
+  kitty-opacity = config.var.theme.kitty-opacity;
   inactive-opacity = config.var.theme.inactive-opacity;
   rounding = config.var.theme.rounding;
   blur = config.var.theme.blur;
@@ -169,8 +170,11 @@ in {
           clickfinger_behavior = true;
         };
       };
-
     };
+
+    extraConfig = ''
+      windowrule = opacity ${kitty-opacity} override,^(kitty)$
+    '';
   };
   systemd.user.targets.hyprland-session.Unit.Wants =
     [ "xdg-desktop-autostart.target" ];
