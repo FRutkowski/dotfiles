@@ -83,6 +83,7 @@ in {
       pandoc
       btop
       polychromatic
+      power-profiles-daemon
       #python312Packages.openrazer
 
       # Just cool

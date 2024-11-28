@@ -24,8 +24,8 @@
     ../../themes/stylix/nixy.nix
 
     ./hardware-configuration.nix
-    /home/filip/.config/nixos/hosts/common/variables.nix
-    #../common/variables.nix
+    #/home/filip/.config/nixos/hosts/common/variables.nix
+    ../common/variables.nix
   ];
 
   nixpkgs.config.chromium.enableWideVine = true;
@@ -44,8 +44,8 @@
     proggyfonts
   ];
 
-  home-manager.users."${config.var.username}" =
-    import /home/filip/.config/nixos/hosts/common/home.nix;
+  home-manager.users."${config.var.username}" = import ../common/home.nix;
+  #import /home/filip/.config/nixos/hosts/common/home.nix;
   # Don't touch this
   system.stateVersion = "24.05";
 }
