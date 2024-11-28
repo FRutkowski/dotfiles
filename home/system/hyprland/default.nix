@@ -79,7 +79,6 @@ in {
         "ANKI_WAYLAND,1"
         "DISABLE_QT5_COMPAT,0"
         "NIXOS_OZONE_WL,1"
-        "XDG_SESSION_TYPE,wayland"
         "XDG_SESSION_DESKTOP,Hyprland"
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
         "QT_QPA_PLATFORM=wayland,xcb"
@@ -92,18 +91,19 @@ in {
         "DISABLE_QT5_COMPAT,0"
         "DIRENV_LOG_FORMAT,"
         "WLR_DRM_NO_ATOMIC,1"
-        "WLR_BACKEND,vulkan"
-        "WLR_RENDERER,vulkan"
-        "WLR_NO_HARDWARE_CURSORS,1"
-        "XDG_SESSION_TYPE,wayland"
+        #"WLR_BACKEND,vulkan"
+        #"WLR_RENDERER,vulkan"
         "SDL_VIDEODRIVER,wayland"
         "CLUTTER_BACKEND,wayland"
-        # "AQ_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1" # CHANGEME: Related to the GPU
+        "AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0" # CHANGEME: Related to the GPU
+        #"AQ_DRM_DEVICES,/dev/dri/card0" # CHANGEME: Related to the GPU
+        #"WLR_NO_HARDWARE_CURSORS,1"
+        #"AQ_DRM_DEVICES,/dev/dri/card0" # CHANGEME: Related to the GPU
       ];
 
       cursor = {
         no_hardware_cursors = true;
-        default_monitor = "eDP-2";
+        default_monitor = "eDP-1";
       };
 
       general = {
@@ -115,18 +115,20 @@ in {
         layout = "master";
       };
 
+      debug = { disable_logs = false; };
+
       decoration = {
         active_opacity = active-opacity;
         inactive_opacity = inactive-opacity;
         inherit rounding;
-        drop_shadow = true;
-        shadow_range = 20;
-        shadow_render_power = 3;
-        #shadow = {
-        #  enabled = false;
-        #  range = 20;
-        #  render_power = 3;
-        #};
+        #drop_shadow = true;
+        #shadow_range = 20;
+        #shadow_render_power = 3;
+        shadow = {
+          enabled = false;
+          range = 20;
+          render_power = 3;
+        };
         blur = { enabled = if blur then "true" else "false"; };
       };
 

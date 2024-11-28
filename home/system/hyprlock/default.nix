@@ -1,5 +1,5 @@
 # Hyprlock is a lockscreen for Hyprland
-{ config, ... }:
+{ lib, config, ... }:
 let
   foreground = "rgba(216, 222, 233, 0.70)";
   #imageStr = toString config.stylix.image;
@@ -17,7 +17,7 @@ in {
 
       #trace "iimage str" imageStr;
       # BACKGROUND
-      background = {
+      background = lib.mkForce {
         monitor = "";
         path = imageStr;
         blur_passes = 0;
@@ -68,7 +68,7 @@ in {
       ];
 
       # INPUT FIELD
-      input-field = [{
+      input-field = lib.mkForce {
         monitor = "";
         size = "300, 60";
         outline_thickness = 2;
@@ -85,7 +85,7 @@ in {
         position = "0, -250";
         halign = "center";
         valign = "center";
-      }];
+      };
     };
   };
 }

@@ -7,7 +7,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,11 +32,17 @@
       url = "github:FRutkowski/wallpapers";
       flake = false;
     };
-    hyprland.url =
-      "git+https://github.com/hyprwm/Hyprland?ref=main&rev=e3882b23d09aad7f5c3a708536c87b062f3b0d8d";
+    #hyprland.url = "git+https://github.com/hyprwm/Hyprland?ref=main&rev=e3882b23d09aad7f5c3a708536c87b062f3b0d8d";
+    #aquamarine = {
+    #  type = "git";
+    #  url = "https://github.com/hyprwm/aquamarine";
+
+    #};
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland";
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     hyprsunset.url = "github:hyprwm/hyprsunset";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    #hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    hyprpanel.url = "github:paradoxical-dev/HyprPanel/master";
     stylix.url = "github:danth/stylix";
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
   };
@@ -51,7 +57,7 @@
               nixpkgs.overlays = [ inputs.hyprpanel.overlay ];
               _module.args = { inherit inputs; };
             }
-            #inputs.nixos-hardware.nixosModules. # CHANGEME: check https://github.com/NixOS/nixos-hardware
+            inputs.nixos-hardware.nixosModules.common-gpu-intel # CHANGEME: check https://github.com/NixOS/nixos-hardware
             inputs.home-manager.nixosModules.home-manager
             inputs.stylix.nixosModules.stylix
             ./hosts/laptop/configuration.nix # CHANGEME: change the path to match your host folder
