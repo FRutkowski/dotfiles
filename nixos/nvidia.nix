@@ -4,8 +4,8 @@ let
     config.boot.kernelPackages.nvidiaPackages.beta; # stable, latest, beta, etc.
 in {
   # Load nvidia driver for Xorg and Wayland
+
   services.xserver.videoDrivers = [ "nvidia" ]; # or "nvidiaLegacy470 etc.
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   boot.kernelParams =
     lib.optionals (lib.elem "nvidia" config.services.xserver.videoDrivers) [
       "nvidia-drm.modeset=1"
@@ -18,10 +18,7 @@ in {
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     LIBVA_DRIVER_NAME = "nvidia"; # hardware acceleration
     NVD_BACKEND = "direct";
-    SDL_VIDEODRIVER = "wayland";
-    #__NV_PRIME_RENDER_OFFLOAD = "1";
-    #VDPAU_DRIVER = "nvidia";
-    #VAAPI_DEVICE = "/dev/dri/by-path/pci-0000:01:00.0-render";
+    #GBM_BACKEND = "nvidia_drm"; # If crash in firefox, remove this line
   };
 
   nixpkgs.config = {
@@ -38,8 +35,8 @@ in {
     nvidia = {
       open = false;
       nvidiaSettings = true;
-      powerManagement.enable =
-        false; # This can cause sleep/suspend to fail and saves entire VRAM to /tmp/
+      nvidiaPersistenced = true;
+      powerManagement.enable = true;
       powerManagement.finegrained = false;
       modesetting.enable = true;
       package = nvidiaDriverChannel;

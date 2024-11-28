@@ -90,6 +90,7 @@ in {
       cbonsai
       pipes
       cmatrix
+      glxinfo
       #cava
       # libGL
       # libGLU
