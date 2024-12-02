@@ -65,12 +65,14 @@ in {
       plugin = { overview = { autoDrag = false; }; };
 
       monitor = [
-        "eDP-2,highres,0x0,1"
+        ",prefered,auto,1, mirror, HDMI-A-1"
+        #"eDP-2,highres,0x0,1"
         "DP-7, disable"
         "DP-8, disable"
         "DP-9, disable"
-        "HDMI-A-1,3440x1440@99.98,auto,1"
-        ",prefered,auto,1"
+        #"desc:Seiko Epson Corporation EPSON PJ 0x01010101,prefered,0x0,1"
+        #"HDMI-A-1,3440x1440@99.98,auto,1"
+        #"desc:Chimei Innolux Corporation 0x15E7,prefered,0x0"
       ];
 
       env = [
@@ -122,9 +124,6 @@ in {
         active_opacity = active-opacity;
         inactive_opacity = inactive-opacity;
         inherit rounding;
-        #drop_shadow = true;
-        #shadow_range = 20;
-        #shadow_render_power = 3;
         shadow = {
           enabled = false;
           range = 20;

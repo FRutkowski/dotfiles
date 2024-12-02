@@ -61,6 +61,7 @@ in {
       libsForQt5.gwenview
       lf
       seatd
+      networkmanagerapplet
 
       # Dev
       go

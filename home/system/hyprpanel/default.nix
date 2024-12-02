@@ -83,7 +83,7 @@ in {
           "menus.dashboard.directories.right.directory1.label": "󱂵 Home",
           "menus.dashboard.directories.right.directory1.command": "bash -c \"thunar $HOME/\"",
           "menus.dashboard.directories.right.directory2.label": "󰚝 Projects",
-          "menus.dashboard.directories.right.directory2.command": "bash -c \"thunar $HOME/dev/\"",
+          "menus.dashboard.directories.right.directory2.command": "bash -c \"thunar $HOME/Projects/\"",
           "menus.dashboard.directories.right.directory3.label": " Config",
           "menus.dashboard.directories.right.directory3.command": "bash -c \"thunar $HOME/.config/\"",
           "theme.dashboard.directories.directory.left.top": "${mild}",
