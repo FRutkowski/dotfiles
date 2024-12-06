@@ -94,13 +94,13 @@ in {
         "DISABLE_QT5_COMPAT,0"
         "DIRENV_LOG_FORMAT,"
         "WLR_DRM_NO_ATOMIC,1"
+        "WLR_NO_HARDWARE_CURSORS,1"
         #"WLR_BACKEND,vulkan"
         #"WLR_RENDERER,vulkan"
         "SDL_VIDEODRIVER,wayland"
         "CLUTTER_BACKEND,wayland"
         "AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0" # CHANGEME: Related to the GPU
         #"AQ_DRM_DEVICES,/dev/dri/card0" # CHANGEME: Related to the GPU
-        #"WLR_NO_HARDWARE_CURSORS,1"
         #"AQ_DRM_DEVICES,/dev/dri/card0" # CHANGEME: Related to the GPU
       ];
 

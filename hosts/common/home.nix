@@ -49,7 +49,6 @@ in {
 
     packages = with pkgs; [
       # Apps
-      discord # Chat
       discord-screenaudio
       bitwarden # Password manager
       vlc # Video player
@@ -58,7 +57,9 @@ in {
       pavucontrol
       telegram-desktop
       myChromium
+      brave
       libsForQt5.gwenview
+      webcord
       lf
       seatd
       networkmanagerapplet
