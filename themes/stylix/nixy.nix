@@ -33,9 +33,14 @@
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/mountain.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/da-one-ocean.yaml";
+    # cursor = {
+    #   package = pkgs.bibata-cursors;
+    #   name = "Bibata-Modern-Ice";
+    #   size = 24;
+    # };
     cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
+      package = pkgs.vimix-cursors;
+      name = "Vimix-cursors";
       size = 24;
     };
 
