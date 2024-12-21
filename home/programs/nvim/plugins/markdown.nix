@@ -120,17 +120,17 @@ in {
         vim.bo.expandtab = true 
       '';
     };
-    highlight = {
-      RenderMarkdownBg.bg = background;
-      RenderMarkdownH1.fg = accent;
-      RenderMarkdownH2.fg = accent;
-      RenderMarkdownH3.fg = accent-alt;
-      RenderMarkdownH4.fg = accent-alt;
-      RenderMarkdownH5.fg = accent-alt;
-      RenderMarkdownH6.fg = accent-alt;
-      RenderMarkdownTodo.fg = muted;
-      RenderMarkdownWarning.fg = accent;
-    };
+    # highlight = {
+    #   RenderMarkdownBg.bg = background;
+    #   RenderMarkdownH1.fg = accent;
+    #   RenderMarkdownH2.fg = accent;
+    #   RenderMarkdownH3.fg = accent-alt;
+    #   RenderMarkdownH4.fg = accent-alt;
+    #   RenderMarkdownH5.fg = accent-alt;
+    #   RenderMarkdownH6.fg = accent-alt;
+    #   RenderMarkdownTodo.fg = muted;
+    #   RenderMarkdownWarning.fg = accent;
+    # };
     plugins.headlines = {
       enable = true;
       settings = {

@@ -1,8 +1,12 @@
 { config, ... }: {
   programs.nixvim = {
-    highlightOverride = {
-      FloatBorder.fg = "#${config.lib.stylix.colors.base0D}";
+    colorschemes.tokyonight = {
+      enable = true;
+      settings = { style = "night"; };
     };
+    #highlightOverride = {
+    #  #FloatBorder.fg = "#${config.lib.stylix.colors.base0D}";
+    #};
     plugins = {
       copilot-vim.enable = true;
       flash.enable = true;
@@ -43,6 +47,7 @@
           };
         };
       };
+
       # treesitter-context.enable = true;
     };
   };

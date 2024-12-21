@@ -9,7 +9,6 @@ in {
     ../../home/programs/direnv
     ../../home/programs/kitty
     ../../home/programs/nvim
-    ../../home/programs/qutebrowser
     ../../home/programs/shell
     ../../home/programs/fetch
     ../../home/programs/git

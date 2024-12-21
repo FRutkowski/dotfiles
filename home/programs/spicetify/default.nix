@@ -10,6 +10,7 @@ in {
     builtins.elem (lib.getName pkg) [ "spotify" ];
 
   stylix.targets.spicetify.enable = false;
+  stylix.targets.nixvim.enable = false;
 
   programs.spicetify = {
     enable = true;
