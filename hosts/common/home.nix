@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, inputs, config, ... }:
 let myChromium = pkgs.chromium.override { enableWideVine = true; };
 in {
 
@@ -19,6 +19,7 @@ in {
     ../../home/programs/markdown
     ../../home/programs/thunar
     ../../home/programs/lazygit
+    /home/filip/.config/nixos/home/programs/lf
     ../../home/programs/nh
 
     # Scripts
@@ -60,9 +61,9 @@ in {
       brave
       libsForQt5.gwenview
       webcord
-      lf
       seatd
       networkmanagerapplet
+      inputs.zen-browser.packages."${system}".default
 
       # Dev
       go
@@ -79,6 +80,7 @@ in {
       # Utils
       zip
       libpng
+      xarchiver
       unzip
       optipng
       pfetch

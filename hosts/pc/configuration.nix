@@ -24,6 +24,7 @@
 
     ../../themes/stylix/nixy.nix
 
+    /home/filip/.config/nixos/nixos/steam.nix
     ./hardware-configuration.nix
     ../common/variables.nix
     #/home/filip/.config/nixos/hosts/common/variables.nix

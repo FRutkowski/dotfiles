@@ -39,6 +39,8 @@
     hyprpanel.url = "github:paradoxical-dev/HyprPanel/master";
     stylix.url = "github:danth/stylix";
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
+    zen-browser.url =
+      "git+https://git.sr.ht/~canasta/zen-browser-flake/"; # updated flake
   };
 
   outputs = inputs@{ nixpkgs, ... }: {
@@ -54,7 +56,7 @@
             inputs.nixos-hardware.nixosModules.common-gpu-intel # CHANGEME: check https://github.com/NixOS/nixos-hardware
             inputs.home-manager.nixosModules.home-manager
             inputs.stylix.nixosModules.stylix
-            ./hosts/laptop/configuration.nix # CHANGEME: change the path to match your host folder
+            ./hosts/pc/configuration.nix # CHANGEME: change the path to match your host folder
           ];
         };
     };
