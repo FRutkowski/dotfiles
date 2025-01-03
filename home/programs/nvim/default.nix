@@ -4,6 +4,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     ./plugins/cmp.nix
     ./plugins/dashboard.nix
+    ./plugins/diagnostics.nix
     ./plugins/lsp.nix
     ./plugins/markdown.nix
     ./plugins/tree.nix

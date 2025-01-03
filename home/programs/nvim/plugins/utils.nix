@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   programs.nixvim = {
     colorschemes.tokyonight = {
       enable = true;
@@ -7,6 +7,29 @@
     #highlightOverride = {
     #  #FloatBorder.fg = "#${config.lib.stylix.colors.base0D}";
     #};
+    extraPlugins = [
+      pkgs.vimPlugins.actions-preview-nvim
+      pkgs.vimPlugins.tiny-inline-diagnostic-nvim
+    ];
+
+    extraConfigLua =
+      # lua
+      ''
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+          vim.lsp.handlers.hover, { border = "rounded" }
+        )
+
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+          vim.lsp.handlers.signature_help, { border = "rounded" }
+        )
+
+        vim.diagnostic.config({
+          float = { border = "rounded" }
+        })
+
+        require("tiny-inline-diagnostic").setup()
+      '';
+
     plugins = {
       copilot-vim.enable = true;
       flash.enable = true;

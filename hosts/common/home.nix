@@ -18,7 +18,7 @@ in {
     ../../home/programs/markdown
     ../../home/programs/thunar
     ../../home/programs/lazygit
-    /home/filip/.config/nixos/home/programs/lf
+    ../../home/programs/lf
     ../../home/programs/nh
 
     # Scripts
@@ -78,6 +78,7 @@ in {
 
       # Utils
       zip
+      xarchiver
       libpng
       xarchiver
       unzip
@@ -85,6 +86,7 @@ in {
       pfetch
       pandoc
       btop
+      rar
       polychromatic
       power-profiles-daemon
       #python312Packages.openrazer
