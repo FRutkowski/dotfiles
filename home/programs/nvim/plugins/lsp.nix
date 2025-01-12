@@ -28,7 +28,7 @@
         };
         tailwindcss = {
           enable = true;
-          filetypes = [ "typescript" "vue" "javascript" ];
+          filetypes = [ "vue" ];
         };
         html.enable = true;
         biome = {

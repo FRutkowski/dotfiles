@@ -31,6 +31,7 @@
   ];
 
   nixpkgs.config.chromium.enableWideVine = true;
+  networking.firewall.allowedTCPPorts = [ 1883 8883 8000 ];
   nixpkgs.overlays =
     [ (final: prev: { _7zz = prev._7zz.override { useUasm = true; }; }) ];
   fonts.packages = with pkgs; [

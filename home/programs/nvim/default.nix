@@ -2,21 +2,27 @@
 { inputs, ... }: {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    ./plugins/cmp.nix
-    ./plugins/dashboard.nix
-    ./plugins/diagnostics.nix
-    ./plugins/lsp.nix
-    ./plugins/markdown.nix
-    ./plugins/tree.nix
-    ./plugins/ui.nix
-    ./plugins/utils.nix
-    ./plugins/dap.nix
-    ./plugins/telescope.nix
-    ./plugins/zenmode.nix
-
-    ./options.nix
-    ./keymaps.nix
+    # ./plugins/cmp.nix
+    # ./plugins/dashboard.nix
+    # ./plugins/diagnostics.nix
+    # ./plugins/lsp.nix
+    # ./plugins/markdown.nix
+    # ./plugins/tree.nix
+    # ./plugins/ui.nix
+    # ./plugins/utils.nix
+    # ./plugins/dap.nix
+    # ./plugins/telescope.nix
+    # ./plugins/zenmode.nix
+    #
+    # ./options.nix
+    # ./keymaps.nix
   ];
 
-  programs.nixvim.enable = true;
+  programs.nixvim = {
+    enable = true;
+    imports = [ inputs.Neve.nixvimModule ];
+    # Then configure Nixvim as usual, you might have to lib.mkForce some of the settings
+    colorschemes.tokyonight.enable = true;
+
+  };
 }

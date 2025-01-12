@@ -16,6 +16,8 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvix = { url = "github:FRutkowski/nixvim-conf"; };
+    # nvix = {url = "github:niksingh710/nvix";};
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,10 +55,11 @@
               nixpkgs.overlays = [ inputs.hyprpanel.overlay ];
               _module.args = { inherit inputs; };
             }
+
             inputs.nixos-hardware.nixosModules.common-gpu-intel # CHANGEME: check https://github.com/NixOS/nixos-hardware
             inputs.home-manager.nixosModules.home-manager
             inputs.stylix.nixosModules.stylix
-            ./hosts/laptop/configuration.nix # CHANGEME: change the path to match your host folder
+            ./hosts/pc/configuration.nix # CHANGEME: change the path to match your host folder
           ];
         };
     };

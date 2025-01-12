@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }:
+{ pkgs, inputs, config, lib, ... }:
 let myChromium = pkgs.chromium.override { enableWideVine = true; };
 in {
 
@@ -8,7 +8,7 @@ in {
     # Programs
     ../../home/programs/direnv
     ../../home/programs/kitty
-    ../../home/programs/nvim
+    # ../../home/programs/nvim
     ../../home/programs/shell
     ../../home/programs/fetch
     ../../home/programs/git
@@ -55,6 +55,7 @@ in {
       blanket # White-noise app
       tidal-hifi
       pavucontrol
+      inputs.nvix.packages.${system}.full
       telegram-desktop
       myChromium
       brave
@@ -97,6 +98,7 @@ in {
       pipes
       cmatrix
       glxinfo
+      htop
       #cava
       # libGL
       # libGLU
