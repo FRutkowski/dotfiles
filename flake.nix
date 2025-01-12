@@ -59,7 +59,7 @@
             inputs.nixos-hardware.nixosModules.common-gpu-intel # CHANGEME: check https://github.com/NixOS/nixos-hardware
             inputs.home-manager.nixosModules.home-manager
             inputs.stylix.nixosModules.stylix
-            ./hosts/pc/configuration.nix # CHANGEME: change the path to match your host folder
+            ./hosts/laptop/configuration.nix # CHANGEME: change the path to match your host folder
           ];
         };
     };
