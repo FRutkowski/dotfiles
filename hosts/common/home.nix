@@ -1,6 +1,14 @@
-{ pkgs, inputs, config, lib, ... }:
-let myChromium = pkgs.chromium.override { enableWideVine = true; };
-in {
+{
+  pkgs,
+  inputs,
+  config,
+  lib,
+  ...
+}:
+let
+  myChromium = pkgs.chromium.override { enableWideVine = true; };
+in
+{
 
   imports = [
     ./variables.nix
@@ -55,7 +63,7 @@ in {
       blanket # White-noise app
       tidal-hifi
       pavucontrol
-      inputs.nvix.packages.${system}.full
+      inputs.mynixvim.packages.${system}.default
       telegram-desktop
       myChromium
       brave
@@ -113,7 +121,9 @@ in {
     ];
 
     # Import my profile picture, used by the hyprpanel dashboard
-    file.".profile_picture.png" = { source = ./profile_picture.png; };
+    file.".profile_picture.png" = {
+      source = ./profile_picture.png;
+    };
 
     # Don't touch this
     stateVersion = "24.05";
