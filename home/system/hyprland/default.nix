@@ -1,5 +1,10 @@
 # So best window tiling manager
-{ pkgs, config, inputs, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 let
   border-size = config.var.theme.border-size;
   gaps-in = config.var.theme.gaps-in;
@@ -10,9 +15,14 @@ let
   rounding = config.var.theme.rounding;
   blur = config.var.theme.blur;
   keyboardLayout = config.var.keyboardLayout;
-in {
+in
+{
 
-  imports = [ ./animations.nix ./bindings.nix ./polkitagent.nix ];
+  imports = [
+    ./animations.nix
+    ./bindings.nix
+    ./polkitagent.nix
+  ];
 
   home.packages = with pkgs; [
     qt5.qtwayland
@@ -62,7 +72,11 @@ in {
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
       ];
 
-      plugin = { overview = { autoDrag = false; }; };
+      plugin = {
+        overview = {
+          autoDrag = false;
+        };
+      };
 
       monitor = [
         ",prefered,auto,1, mirror, HDMI-A-1"
@@ -118,7 +132,9 @@ in {
         layout = "master";
       };
 
-      debug = { disable_logs = false; };
+      debug = {
+        disable_logs = false;
+      };
 
       decoration = {
         active_opacity = active-opacity;
@@ -129,7 +145,9 @@ in {
           range = 20;
           render_power = 3;
         };
-        blur = { enabled = if blur then "true" else "false"; };
+        blur = {
+          enabled = if blur then "true" else "false";
+        };
       };
 
       master = {
@@ -138,7 +156,9 @@ in {
         mfact = 0.5;
       };
 
-      gestures = { workspace_swipe = true; };
+      gestures = {
+        workspace_swipe = true;
+      };
 
       misc = {
         vfr = true;
@@ -149,10 +169,16 @@ in {
         new_window_takes_over_fullscreen = 2;
       };
 
-      windowrulev2 =
-        [ "float, tag:modal" "pin, tag:modal" "center, tag:modal" ];
+      windowrulev2 = [
+        "float, tag:modal"
+        "pin, tag:modal"
+        "center, tag:modal"
+      ];
 
-      layerrule = [ "noanim, launcher" "noanim, ^ags-.*" ];
+      layerrule = [
+        "noanim, launcher"
+        "noanim, ^ags-.*"
+      ];
 
       input = {
         kb_layout = keyboardLayout;
@@ -189,8 +215,9 @@ in {
 
     extraConfig = ''
       windowrule = opacity ${kitty-opacity} override,^(kitty)$
+      windowrule = opacity ${kitty-opacity} override,^(code)$
+      windowrule = opacity 0.7 override,^(neovide)$
     '';
   };
-  systemd.user.targets.hyprland-session.Unit.Wants =
-    [ "xdg-desktop-autostart.target" ];
+  systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
 }

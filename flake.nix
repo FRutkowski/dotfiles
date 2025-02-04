@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mynixvim = {
-      url = "github:FRutkowski/mynixvim";
+      url = "github:FRutkowski/test-nixvim-config";
     };
     # nvix = {url = "github:niksingh710/nvix";};
     spicetify-nix = {

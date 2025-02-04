@@ -16,7 +16,6 @@ in
     # Programs
     ../../home/programs/direnv
     ../../home/programs/kitty
-    # ../../home/programs/nvim
     ../../home/programs/shell
     ../../home/programs/fetch
     ../../home/programs/git
@@ -67,6 +66,7 @@ in
       telegram-desktop
       myChromium
       brave
+      anydesk
       libsForQt5.gwenview
       webcord
       seatd
@@ -118,6 +118,15 @@ in
       jetbrains.idea-community-bin
       firefox
       neovide
+      tailwindcss
+    ];
+
+    sessionVariables = {
+      PNPM_HOME = "$HOME/.pnpm-bin";
+    };
+
+    sessionPath = [
+      "$HOME/.pnpm-bin"
     ];
 
     # Import my profile picture, used by the hyprpanel dashboard
