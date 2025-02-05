@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ../../nixos/nvidia.nix # CHANGEME: Remove this line if you don't have an Nvidia GPU
     #../../nixos/prime.nix # CHANGEME: Remove this line if you don't have an Nvidia GPU
@@ -22,7 +28,8 @@
     ../../nixos/docker.nix
     ../../nixos/openrazer.nix
 
-    ../../themes/stylix/nixy.nix
+    #NOTE: CHANGE THEME
+    /home/filip/.config/nixos/themes/stylix/woodland.nix
 
     ../../nixos/steam.nix
     ./hardware-configuration.nix
@@ -31,9 +38,13 @@
   ];
 
   nixpkgs.config.chromium.enableWideVine = true;
-  networking.firewall.allowedTCPPorts = [ 1883 8883 8000 ];
-  nixpkgs.overlays =
-    [ (final: prev: { _7zz = prev._7zz.override { useUasm = true; }; }) ];
+  networking.firewall.allowedTCPPorts = [
+    1883
+    8883
+    8000
+  ];
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ (final: prev: { _7zz = prev._7zz.override { useUasm = true; }; }) ];
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans

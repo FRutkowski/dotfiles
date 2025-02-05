@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   config,
-  lib,
   ...
 }:
 let
@@ -15,6 +14,7 @@ in
 
     # Programs
     ../../home/programs/direnv
+    /home/filip/.config/nixos/home/programs/doomemacs
     ../../home/programs/kitty
     ../../home/programs/shell
     ../../home/programs/fetch
@@ -35,8 +35,9 @@ in
     ../../home/system/hyprland
     ../../home/system/hypridle
     ../../home/system/hyprlock
-    ../../home/system/hyprpanel
     ../../home/system/hyprpaper
+    #NOTE: CHANGE THEME
+    /home/filip/.config/nixos/home/system/hyprpanel/woodland.nix
     ../../home/system/gtk
     ../../home/system/wofi
     ../../home/system/batsignal
@@ -45,6 +46,7 @@ in
     ../../home/system/udiskie
     ../../home/system/clipman
     ../../home/system/tofi
+    inputs.nix-doom-emacs.hmModule
 
     #./secrets # CHANGEME: You should probably remove this line, this is where I store my secrets
   ];
@@ -137,6 +139,11 @@ in
     # Don't touch this
     stateVersion = "24.05";
   };
+
+  # programs.doom-emacs = {
+  #   enable = true;
+  #   doomPrivateDir = ./doom.d;
+  # };
 
   programs.home-manager.enable = true;
 }

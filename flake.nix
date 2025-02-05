@@ -36,6 +36,7 @@
       url = "github:FRutkowski/wallpapers";
       flake = false;
     };
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     hyprland.url = "github:hyprwm/Hyprland";
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     hyprsunset.url = "github:hyprwm/hyprsunset";

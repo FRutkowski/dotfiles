@@ -1,4 +1,8 @@
 { pkgs, inputs, ... }: {
+  # imports = [
+  #   /home/filip/.config/nixos/home/system/hyprpanel/nixy.nix
+  # ];
+
   stylix = {
     enable = true;
 
