@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   inputs,
   config,
   ...
@@ -36,8 +37,6 @@ in
     ../../home/system/hypridle
     ../../home/system/hyprlock
     ../../home/system/hyprpaper
-    #NOTE: CHANGE THEME
-    /home/filip/.config/nixos/home/system/hyprpanel/woodland.nix
     ../../home/system/gtk
     ../../home/system/wofi
     ../../home/system/batsignal
@@ -47,6 +46,10 @@ in
     ../../home/system/clipman
     ../../home/system/tofi
     inputs.nix-doom-emacs.hmModule
+
+    #NOTE: CHANGE THEME
+    /home/filip/.config/nixos/home/system/hyprpanel/forest-waterfalls.nix
+    /home/filip/.config/nixos/home/programs/nvim/forest-waterfalls.nix
 
     #./secrets # CHANGEME: You should probably remove this line, this is where I store my secrets
   ];
@@ -64,7 +67,8 @@ in
       blanket # White-noise app
       tidal-hifi
       pavucontrol
-      inputs.mynixvim.packages.${system}.default
+      # nixvim
+      # inputs.mynixvim.packages.${system}.default
       telegram-desktop
       myChromium
       brave
@@ -129,6 +133,7 @@ in
 
     sessionPath = [
       "$HOME/.pnpm-bin"
+
     ];
 
     # Import my profile picture, used by the hyprpanel dashboard

@@ -29,7 +29,7 @@
     ../../nixos/openrazer.nix
 
     #NOTE: CHANGE THEME
-    /home/filip/.config/nixos/themes/stylix/woodland.nix
+    /home/filip/.config/nixos/themes/stylix/forest-waterfalls.nix
 
     ../../nixos/steam.nix
     ./hardware-configuration.nix
