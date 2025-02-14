@@ -27,7 +27,7 @@ in {
 
   qt = {
     enable = true;
-    platformTheme.name = "gtk2";
+    platformTheme.name = lib.mkForce "gtk2";
     style.name = "gtk2";
   };
 
@@ -76,7 +76,7 @@ in {
           sed -i '2,26d' $file
           sed -i '2i @import url("../colors3");' $file
 
-          cp -r . $out 
+          cp -r . $out
         '';
       };
     };

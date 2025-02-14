@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
   programs = {
-    steam.enable = true;
-    steam.gamescopeSession.enable = true;
-    gamemode.enable = true;
+    steam.enable = false;
+    steam.gamescopeSession.enable = false;
+    gamemode.enable = false;
   };
   environment.systemPackages = with pkgs; [ mangohud protonup ];
   environment.sessionVariables = {

@@ -26,7 +26,7 @@ in {
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
         "cudatoolkit"
-        "nvidia-persistenced"
+        # "nvidia-persistenced"
         "nvidia-settings"
         "nvidia-x11"
       ];
@@ -35,7 +35,7 @@ in {
     nvidia = {
       open = false;
       nvidiaSettings = true;
-      nvidiaPersistenced = true;
+      nvidiaPersistenced = false;
       powerManagement.enable = true;
       powerManagement.finegrained = false;
       modesetting.enable = true;

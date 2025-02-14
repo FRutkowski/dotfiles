@@ -1,970 +1,439 @@
 # Hyprpanel is the bar on top of the screen
 # Display informations like workspaces, battery, wifi, ...
-{ pkgs, config, ... }:
-let
-  transparentButtons = config.var.theme.bar.transparentButtons;
+{ inputs, pkgs, ... }:
+{
+  imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];
+  home.packages = [ pkgs.libnotify ];
 
-  accent = "#${config.lib.stylix.colors.base0D}";
-  accent-alt = "#${config.lib.stylix.colors.base03}";
-  inactive = "#${config.lib.stylix.colors.base04}";
-  background = "#${config.lib.stylix.colors.base00}";
-  background-alt = "#${config.lib.stylix.colors.base01}";
-  background-alt-2 = "#${config.lib.stylix.colors.base02}";
-  mild = "#${config.lib.stylix.colors.base0A}";
-  ocean = "#${config.lib.stylix.colors.base0B}";
-  nature = "#${config.lib.stylix.colors.base0C}";
-  warm = "#${config.lib.stylix.colors.base08}";
-  grey = "#${config.lib.stylix.colors.base06}";
-  dark-grey = "#${config.lib.stylix.colors.base07}";
-  dark = "#${config.lib.stylix.colors.base0F}";
-  sunflower = "#${config.lib.stylix.colors.base09}";
-  foreground = "#${config.lib.stylix.colors.base05}";
-  font = "${config.stylix.fonts.serif.name}";
-  fontSize = "${toString config.stylix.fonts.sizes.desktop}";
-
-  rounding = config.var.theme.rounding;
-  border-size = config.var.theme.border-size;
-
-  gaps-out = config.var.theme.gaps-out;
-  gaps-in = config.var.theme.gaps-in;
-
-  floating = config.var.theme.bar.floating;
-  transparent = config.var.theme.bar.transparent;
-  position = config.var.theme.bar.position;
-
-  location = config.var.location;
-  username = config.var.username;
-in {
-  wayland.windowManager.hyprland.settings.exec-once =
-    [ "${pkgs.hyprpanel}/bin/hyprpanel" ];
-
-  home.packages = with pkgs; [ hyprpanel libnotify ];
-
-  home.file.".cache/ags/hyprpanel/options.json" = {
-    text = # json
-      ''
-        {
-          "bar.customModules.updates.pollingInterval": 1440000,
-          "theme.font.weight": 600,
-          "theme.bar.scaling": 80,
-          "theme.bar.menus.menu.media.scaling": 65,
-          "scalingPriority": "gdk",
-          "theme.bar.menus.menu.dashboard.scaling": 80,
-          "theme.osd.scaling": 80,
-          "theme.bar.menus.menu.notifications.scaling": 80,
-          "theme.bar.menus.menu.clock.scaling": 80,
-          "theme.bar.menus.menu.battery.scaling": 80,
-          "theme.bar.menus.menu.bluetooth.scaling": 80,
-          "theme.bar.menus.menu.network.scaling": 80,
-          "theme.bar.menus.menu.dashboard.confirmation_scaling": 80,
-          "theme.notification.scaling": 80,
-          "theme.bar.menus.menu.power.scaling": 80,
-          "theme.tooltip.scaling": 80,
-          "theme.bar.menus.popover.scaling": 80,
-          "menus.dashboard.powermenu.avatar.image": "/home/${username}/.profile_picture.png",
-          "bar.launcher.icon": "",
-          "theme.bar.menus.menu.volume.scaling": 80,
-          "menus.dashboard.shortcuts.left.shortcut1.icon": "",
-          "menus.dashboard.shortcuts.left.shortcut1.command": "firefox",
-          "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Firefox",
-          "menus.dashboard.shortcuts.left.shortcut2.icon": "󰅶",
-          "menus.dashboard.shortcuts.left.shortcut2.command": "caffeine",
-          "menus.dashboard.shortcuts.left.shortcut2.tooltip": "Caffeine",
-          "menus.dashboard.shortcuts.left.shortcut3.icon": "󰖔",
-          "menus.dashboard.shortcuts.left.shortcut3.command": "night-shift",
-          "menus.dashboard.shortcuts.left.shortcut3.tooltip": "Night-shift",
-          "menus.dashboard.shortcuts.left.shortcut4.icon": "",
-          "menus.dashboard.shortcuts.left.shortcut4.command": "menu",
-          "menus.dashboard.shortcuts.left.shortcut4.tooltip": "Search Apps",
-          "menus.dashboard.shortcuts.right.shortcut1.icon": "",
-          "menus.dashboard.shortcuts.right.shortcut1.command": "hyprpicker -a",
-          "menus.dashboard.shortcuts.right.shortcut1.tooltip": "Color Picker",
-          "menus.dashboard.shortcuts.right.shortcut3.icon": "󰄀",
-          "menus.dashboard.shortcuts.right.shortcut3.command": "screenshot region swappy",
-          "menus.dashboard.shortcuts.right.shortcut3.tooltip": "Screenshot",
-          "menus.dashboard.directories.left.directory1.label": "󰉍 Downloads",
-          "menus.dashboard.directories.left.directory1.command": "bash -c \"thunar $HOME/Downloads/\"",
-          "menus.dashboard.directories.left.directory2.label": "󰉏 Pictures",
-          "menus.dashboard.directories.left.directory2.command": "bash -c \"thunar $HOME/Pictures/\"",
-          "menus.dashboard.directories.left.directory3.label": "󱧶 Documents",
-          "menus.dashboard.directories.left.directory3.command": "bash -c \"thunar $HOME/Documents/\"",
-          "menus.dashboard.directories.right.directory1.label": "󱂵 Home",
-          "menus.dashboard.directories.right.directory1.command": "bash -c \"thunar $HOME/\"",
-          "menus.dashboard.directories.right.directory2.label": "󰚝 Projects",
-          "menus.dashboard.directories.right.directory2.command": "bash -c \"thunar $HOME/Projects/\"",
-          "menus.dashboard.directories.right.directory3.label": " Config",
-          "menus.dashboard.directories.right.directory3.command": "bash -c \"thunar $HOME/.config/\"",
-          "theme.dashboard.directories.directory.left.top": "${mild}",
-          "theme.bar.menus.menu.dashboard.powermenu.shutdown": "${warm}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.deny": "${warm}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.confirm": "${nature}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.button_text": "${background}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.body": "${grey}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.label": "${accent}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.border": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.background": "${background}",
-          "theme.bar.menus.menu.dashboard.powermenu.confirmation.card": "${background-alt}",
-          "theme.bar.menus.background": "${background}",
-          "theme.bar.background": "${background}",
-          "theme.bar.buttons.media.icon": "${accent}",
-          "theme.bar.buttons.media.text": "${accent}",
-          "theme.bar.buttons.icon": "${accent}",
-          "theme.bar.buttons.text": "${accent}",
-          "theme.bar.buttons.hover": "${background-alt-2}",
-          "theme.bar.buttons.background": "${background-alt}",
-          "theme.bar.menus.text": "${grey}",
-          "theme.bar.menus.border.color": "${background-alt}",
-          "theme.bar.buttons.media.background": "${background-alt}",
-          "theme.bar.menus.menu.volume.text": "${grey}",
-          "theme.bar.menus.menu.volume.card.color": "${background-alt}",
-          "theme.bar.menus.menu.volume.label.color": "${warm}",
-          "theme.bar.menus.popover.text": "${accent}",
-          "theme.bar.menus.popover.background": "${background-alt}",
-          "theme.bar.menus.menu.notifications.switch.puck": "${background-alt-2}",
-          "theme.bar.menus.menu.notifications.switch.disabled": "${background-alt}",
-          "theme.bar.menus.menu.notifications.switch.enabled": "${accent}",
-          "theme.bar.menus.menu.notifications.clear": "${warm}",
-          "theme.bar.menus.menu.notifications.switch_divider": "${background-alt-2}",
-          "theme.bar.menus.menu.notifications.border": "${background-alt}",
-          "theme.bar.menus.menu.notifications.card": "${background-alt}",
-          "theme.bar.menus.menu.notifications.background": "${background}",
-          "theme.bar.menus.menu.notifications.no_notifications_label": "${background-alt}",
-          "theme.bar.menus.menu.notifications.label": "${accent}",
-          "theme.bar.menus.menu.dashboard.monitors.disk.label": "${accent}",
-          "theme.bar.menus.menu.dashboard.monitors.disk.bar": "${accent}",
-          "theme.bar.menus.menu.dashboard.monitors.disk.icon": "${accent}",
-          "theme.bar.menus.menu.dashboard.monitors.gpu.label": "${nature}",
-          "theme.bar.menus.menu.dashboard.monitors.gpu.bar": "${nature}",
-          "theme.bar.menus.menu.dashboard.monitors.gpu.icon": "${nature}",
-          "theme.bar.menus.menu.dashboard.monitors.ram.label": "${sunflower}",
-          "theme.bar.menus.menu.dashboard.monitors.ram.bar": "${sunflower}",
-          "theme.bar.menus.menu.dashboard.monitors.ram.icon": "${sunflower}",
-          "theme.bar.menus.menu.dashboard.monitors.cpu.label": "${warm}",
-          "theme.bar.menus.menu.dashboard.monitors.cpu.bar": "${warm}",
-          "theme.bar.menus.menu.dashboard.monitors.cpu.icon": "${warm}",
-          "theme.bar.menus.menu.dashboard.monitors.bar_background": "${background-alt-2}",
-          "theme.bar.menus.menu.dashboard.directories.right.bottom.color": "${accent}",
-          "theme.bar.menus.menu.dashboard.directories.right.middle.color": "${mild}",
-          "theme.bar.menus.menu.dashboard.directories.right.top.color": "${nature}",
-          "theme.bar.menus.menu.dashboard.directories.left.bottom.color": "${warm}",
-          "theme.bar.menus.menu.dashboard.directories.left.middle.color": "${sunflower}",
-          "theme.bar.menus.menu.dashboard.directories.left.top.color": "${accent}",
-          "theme.bar.menus.menu.dashboard.controls.input.text": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.controls.input.background": "${ocean}",
-          "theme.bar.menus.menu.dashboard.controls.volume.text": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.controls.volume.background": "${warm}",
-          "theme.bar.menus.menu.dashboard.controls.notifications.text": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.controls.notifications.background": "${sunflower}",
-          "theme.bar.menus.menu.dashboard.controls.bluetooth.text": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.controls.bluetooth.background": "${nature}",
-          "theme.bar.menus.menu.dashboard.controls.wifi.text": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.controls.wifi.background": "${accent}",
-          "theme.bar.menus.menu.dashboard.controls.disabled": "${dark}",
-          "theme.bar.menus.menu.dashboard.shortcuts.recording": "${nature}",
-          "theme.bar.menus.menu.dashboard.shortcuts.text": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.shortcuts.background": "${accent}",
-          "theme.bar.menus.menu.dashboard.powermenu.sleep": "${nature}",
-          "theme.bar.menus.menu.dashboard.powermenu.logout": "${ocean}",
-          "theme.bar.menus.menu.dashboard.powermenu.restart": "${sunflower}",
-          "theme.bar.menus.menu.dashboard.profile.name": "${accent}",
-          "theme.bar.menus.menu.dashboard.border.color": "${background-alt}",
-          "theme.bar.menus.menu.dashboard.background.color": "${background}",
-          "theme.bar.menus.menu.dashboard.card.color": "${background-alt}",
-          "theme.bar.menus.menu.clock.weather.hourly.temperature": "${accent}",
-          "theme.bar.menus.menu.clock.weather.hourly.icon": "${accent}",
-          "theme.bar.menus.menu.clock.weather.hourly.time": "${accent}",
-          "theme.bar.menus.menu.clock.weather.thermometer.extremelycold": "${nature}",
-          "theme.bar.menus.menu.clock.weather.thermometer.cold": "${ocean}",
-          "theme.bar.menus.menu.clock.weather.thermometer.moderate": "${accent}",
-          "theme.bar.menus.menu.clock.weather.thermometer.hot": "${sunflower}",
-          "theme.bar.menus.menu.clock.weather.thermometer.extremelyhot": "${warm}",
-          "theme.bar.menus.menu.clock.weather.stats": "${accent}",
-          "theme.bar.menus.menu.clock.weather.status": "${nature}",
-          "theme.bar.menus.menu.clock.weather.temperature": "${grey}",
-          "theme.bar.menus.menu.clock.weather.icon": "${accent}",
-          "theme.bar.menus.menu.clock.calendar.contextdays": "${dark}",
-          "theme.bar.menus.menu.clock.calendar.days": "${grey}",
-          "theme.bar.menus.menu.clock.calendar.currentday": "${accent}",
-          "theme.bar.menus.menu.clock.calendar.paginator": "${accent}",
-          "theme.bar.menus.menu.clock.calendar.weekdays": "${accent}",
-          "theme.bar.menus.menu.clock.calendar.yearmonth": "${nature}",
-          "theme.bar.menus.menu.clock.time.timeperiod": "${nature}",
-          "theme.bar.menus.menu.clock.time.time": "${accent}",
-          "theme.bar.menus.menu.clock.text": "${grey}",
-          "theme.bar.menus.menu.clock.border.color": "${background-alt}",
-          "theme.bar.menus.menu.clock.background.color": "${background}",
-          "theme.bar.menus.menu.clock.card.color": "${background-alt}",
-          "theme.bar.menus.menu.battery.slider.puck": "${background-alt-2}",
-          "theme.bar.menus.menu.battery.slider.backgroundhover": "${background-alt-2}",
-          "theme.bar.menus.menu.battery.slider.background": "${dark}",
-          "theme.bar.menus.menu.battery.slider.primary": "${sunflower}",
-          "theme.bar.menus.menu.battery.icons.active": "${sunflower}",
-          "theme.bar.menus.menu.battery.icons.passive": "${dark-grey}",
-          "theme.bar.menus.menu.battery.listitems.active": "${sunflower}",
-          "theme.bar.menus.menu.battery.listitems.passive": "${grey}",
-          "theme.bar.menus.menu.battery.text": "${grey}",
-          "theme.bar.menus.menu.battery.label.color": "${sunflower}",
-          "theme.bar.menus.menu.battery.border.color": "${background-alt}",
-          "theme.bar.menus.menu.battery.background.color": "${background}",
-          "theme.bar.menus.menu.battery.card.color": "${background-alt}",
-          "theme.bar.menus.menu.systray.dropdownmenu.divider": "${background-alt}",
-          "theme.bar.menus.menu.systray.dropdownmenu.text": "${grey}",
-          "theme.bar.menus.menu.systray.dropdownmenu.background": "${background}",
-          "theme.bar.menus.menu.bluetooth.iconbutton.active": "${nature}",
-          "theme.bar.menus.menu.bluetooth.iconbutton.passive": "${grey}",
-          "theme.bar.menus.menu.bluetooth.icons.active": "${nature}",
-          "theme.bar.menus.menu.bluetooth.icons.passive": "${dark-grey}",
-          "theme.bar.menus.menu.bluetooth.listitems.active": "${nature}",
-          "theme.bar.menus.menu.bluetooth.listitems.passive": "${grey}",
-          "theme.bar.menus.menu.bluetooth.switch.puck": "${background-alt-2}",
-          "theme.bar.menus.menu.bluetooth.switch.disabled": "${background-alt}",
-          "theme.bar.menus.menu.bluetooth.switch.enabled": "${nature}",
-          "theme.bar.menus.menu.bluetooth.switch_divider": "${background-alt-2}",
-          "theme.bar.menus.menu.bluetooth.status": "${background-alt-2}",
-          "theme.bar.menus.menu.bluetooth.text": "${grey}",
-          "theme.bar.menus.menu.bluetooth.label.color": "${nature}",
-          "theme.bar.menus.menu.bluetooth.border.color": "${background-alt}",
-          "theme.bar.menus.menu.bluetooth.background.color": "${background}",
-          "theme.bar.menus.menu.bluetooth.card.color": "${background-alt}",
-          "theme.bar.menus.menu.network.iconbuttons.active": "${accent}",
-          "theme.bar.menus.menu.network.iconbuttons.passive": "${grey}",
-          "theme.bar.menus.menu.network.icons.active": "${accent}",
-          "theme.bar.menus.menu.network.icons.passive": "${dark-grey}",
-          "theme.bar.menus.menu.network.listitems.active": "${accent}",
-          "theme.bar.menus.menu.network.listitems.passive": "${grey}",
-          "theme.bar.menus.menu.network.status.color": "${background-alt-2}",
-          "theme.bar.menus.menu.network.text": "${grey}",
-          "theme.bar.menus.menu.network.label.color": "${accent}",
-          "theme.bar.menus.menu.network.border.color": "${background-alt}",
-          "theme.bar.menus.menu.network.background.color": "${background}",
-          "theme.bar.menus.menu.network.card.color": "${background-alt}",
-          "theme.bar.menus.menu.volume.input_slider.puck": "${dark}",
-          "theme.bar.menus.menu.volume.input_slider.backgroundhover": "${background-alt-2}",
-          "theme.bar.menus.menu.volume.input_slider.background": "${dark}",
-          "theme.bar.menus.menu.volume.input_slider.primary": "${warm}",
-          "theme.bar.menus.menu.volume.audio_slider.puck": "${dark}",
-          "theme.bar.menus.menu.volume.audio_slider.backgroundhover": "${background-alt-2}",
-          "theme.bar.menus.menu.volume.audio_slider.background": "${dark}",
-          "theme.bar.menus.menu.volume.audio_slider.primary": "${warm}",
-          "theme.bar.menus.menu.volume.icons.active": "${warm}",
-          "theme.bar.menus.menu.volume.icons.passive": "${dark-grey}",
-          "theme.bar.menus.menu.volume.iconbutton.active": "${warm}",
-          "theme.bar.menus.menu.volume.iconbutton.passive": "${grey}",
-          "theme.bar.menus.menu.volume.listitems.active": "${warm}",
-          "theme.bar.menus.menu.volume.listitems.passive": "${grey}",
-          "theme.bar.menus.menu.volume.border.color": "${background-alt}",
-          "theme.bar.menus.menu.volume.background.color": "${background}",
-          "theme.bar.menus.menu.media.slider.puck": "${background-alt-2}",
-          "theme.bar.menus.menu.media.slider.backgroundhover": "${background-alt-2}",
-          "theme.bar.menus.menu.media.slider.background": "${dark}",
-          "theme.bar.menus.menu.media.slider.primary": "${accent}",
-          "theme.bar.menus.menu.media.buttons.text": "${background}",
-          "theme.bar.menus.menu.media.buttons.background": "${accent}",
-          "theme.bar.menus.menu.media.buttons.enabled": "${nature}",
-          "theme.bar.menus.menu.media.buttons.inactive": "${dark}",
-          "theme.bar.menus.menu.media.border.color": "${background-alt}",
-          "theme.bar.menus.menu.media.background.color": "${background}",
-          "theme.bar.menus.menu.media.album": "${accent}",
-          "theme.bar.menus.menu.media.artist": "${nature}",
-          "theme.bar.menus.menu.media.song": "${accent}",
-          "theme.bar.menus.tooltip.text": "${grey}",
-          "theme.bar.menus.tooltip.background": "${background}",
-          "theme.bar.menus.dropdownmenu.divider": "${background-alt}",
-          "theme.bar.menus.dropdownmenu.text": "${grey}",
-          "theme.bar.menus.dropdownmenu.background": "${background}",
-          "theme.bar.menus.slider.puck": "${background-alt-2}",
-          "theme.bar.menus.slider.backgroundhover": "${background-alt-2}",
-          "theme.bar.menus.slider.background": "${dark}",
-          "theme.bar.menus.slider.primary": "${accent}",
-          "theme.bar.menus.progressbar.background": "${background-alt-2}",
-          "theme.bar.menus.progressbar.foreground": "${accent}",
-          "theme.bar.menus.iconbuttons.active": "${accent}",
-          "theme.bar.menus.iconbuttons.passive": "${grey}",
-          "theme.bar.menus.buttons.text": "${background-alt}",
-          "theme.bar.menus.buttons.disabled": "${dark}",
-          "theme.bar.menus.buttons.active": "${accent}",
-          "theme.bar.menus.buttons.default": "${accent}",
-          "theme.bar.menus.switch.puck": "${background-alt-2}",
-          "theme.bar.menus.switch.disabled": "${background-alt}",
-          "theme.bar.menus.switch.enabled": "${accent}",
-          "theme.bar.menus.icons.active": "${accent}",
-          "theme.bar.menus.icons.passive": "${dark}",
-          "theme.bar.menus.listitems.active": "${accent}",
-          "theme.bar.menus.listitems.passive": "${grey}",
-          "theme.bar.menus.label": "${accent}",
-          "theme.bar.menus.feinttext": "${background-alt}",
-          "theme.bar.menus.dimtext": "${dark}",
-          "theme.bar.menus.cards": "${background-alt}",
-          "theme.bar.buttons.notifications.total": "${accent}",
-          "theme.bar.buttons.notifications.icon": "${accent}",
-          "theme.bar.buttons.notifications.background": "${background-alt}",
-          "theme.bar.buttons.clock.icon": "${accent}",
-          "theme.bar.buttons.clock.text": "${accent}",
-          "theme.bar.buttons.clock.background": "${background-alt}",
-          "theme.bar.buttons.battery.icon": "${sunflower}",
-          "theme.bar.buttons.battery.text": "${sunflower}",
-          "theme.bar.buttons.battery.background": "${background-alt}",
-          "theme.bar.buttons.systray.background": "${background-alt}",
-          "theme.bar.buttons.bluetooth.icon": "${nature}",
-          "theme.bar.buttons.bluetooth.text": "${nature}",
-          "theme.bar.buttons.bluetooth.background": "${background-alt}",
-          "theme.bar.buttons.network.icon": "${accent}",
-          "theme.bar.buttons.network.text": "${accent}",
-          "theme.bar.buttons.network.background": "${background-alt}",
-          "theme.bar.buttons.volume.icon": "${warm}",
-          "theme.bar.buttons.volume.text": "${warm}",
-          "theme.bar.buttons.volume.background": "${background-alt}",
-          "theme.bar.buttons.windowtitle.icon": "${accent}",
-          "theme.bar.buttons.windowtitle.text": "${accent}",
-          "theme.bar.buttons.windowtitle.background": "${background-alt}",
-          "theme.bar.buttons.workspaces.active": "${accent}",
-          "theme.bar.buttons.workspaces.occupied": "${nature}",
-          "theme.bar.buttons.workspaces.available": "${nature}",
-          "theme.bar.buttons.workspaces.hover": "${background-alt-2}",
-          "theme.bar.buttons.workspaces.background": "${background-alt}",
-          "theme.bar.buttons.dashboard.icon": "${sunflower}",
-          "theme.bar.buttons.dashboard.background": "${background-alt}",
-          "theme.osd.label": "${accent}",
-          "theme.osd.icon": "${background}",
-          "theme.osd.bar_overflow_color": "${warm}",
-          "theme.osd.bar_empty_color": "${background-alt}",
-          "theme.osd.bar_color": "${accent}",
-          "theme.osd.icon_container": "${accent}",
-          "theme.osd.bar_container": "${background}",
-          "theme.notification.close_button.label": "${background}",
-          "theme.notification.close_button.background": "${warm}",
-          "theme.notification.labelicon": "${accent}",
-          "theme.notification.text": "${grey}",
-          "theme.notification.time": "${dark}",
-          "theme.notification.border": "${background-alt}",
-          "theme.notification.label": "${accent}",
-          "theme.notification.actions.text": "${background-alt}",
-          "theme.notification.actions.background": "${accent}",
-          "theme.notification.background": "${background-alt}",
-          "theme.bar.buttons.workspaces.numbered_active_highlighted_text_color": "${background-alt}",
-          "theme.bar.buttons.workspaces.numbered_active_underline_color": "${accent}",
-          "theme.bar.menus.menu.media.card.color": "${background-alt}",
-          "theme.bar.menus.check_radio_button.background": "${dark-grey}",
-          "theme.bar.menus.check_radio_button.active": "${accent}",
-          "theme.bar.buttons.style": "default",
-          "theme.bar.menus.menu.notifications.pager.button": "${accent}",
-          "theme.bar.menus.menu.notifications.scrollbar.color": "${accent}",
-          "theme.bar.menus.menu.notifications.pager.label": "${dark-grey}",
-          "theme.bar.menus.menu.notifications.pager.background": "${background}",
-          "theme.bar.buttons.clock.icon_background": "${accent}",
-          "theme.bar.buttons.modules.ram.icon": "${sunflower}",
-          "theme.bar.buttons.modules.storage.icon_background": "${warm}",
-          "theme.bar.menus.popover.border": "${background-alt}",
-          "theme.bar.buttons.volume.icon_background": "${warm}",
-          "theme.bar.menus.menu.power.buttons.sleep.icon_background": "${nature}",
-          "theme.bar.menus.menu.power.buttons.restart.text": "${sunflower}",
-          "theme.bar.buttons.modules.updates.background": "${background-alt}",
-          "theme.bar.buttons.modules.storage.icon": "${warm}",
-          "theme.bar.buttons.modules.netstat.background": "${background-alt}",
-          "theme.bar.buttons.modules.weather.icon": "${accent}",
-          "theme.bar.buttons.modules.netstat.text": "${nature}",
-          "theme.bar.buttons.modules.storage.background": "${background-alt}",
-          "theme.bar.buttons.modules.power.icon": "${warm}",
-          "theme.bar.buttons.modules.storage.text": "${warm}",
-          "theme.bar.buttons.modules.cpu.background": "${background-alt}",
-          "theme.bar.menus.menu.power.border.color": "${background-alt}",
-          "theme.bar.buttons.network.icon_background": "${accent}",
-          "theme.bar.buttons.modules.power.icon_background": "${warm}",
-          "theme.bar.menus.menu.power.buttons.logout.icon": "${background-alt}",
-          "theme.bar.menus.menu.power.buttons.restart.icon_background": "${sunflower}",
-          "theme.bar.menus.menu.power.buttons.restart.icon": "${background-alt}",
-          "theme.bar.buttons.modules.cpu.icon": "${warm}",
-          "theme.bar.buttons.battery.icon_background": "${sunflower}",
-          "theme.bar.buttons.modules.kbLayout.icon_background": "${nature}",
-          "theme.bar.buttons.modules.weather.text": "${accent}",
-          "theme.bar.menus.menu.power.buttons.shutdown.icon": "${background-alt}",
-          "theme.bar.menus.menu.power.buttons.sleep.text": "${nature}",
-          "theme.bar.buttons.modules.weather.icon_background": "${accent}",
-          "theme.bar.menus.menu.power.buttons.shutdown.background": "${background-alt}",
-          "theme.bar.buttons.media.icon_background": "${accent}",
-          "theme.bar.menus.menu.power.buttons.logout.background": "${background-alt}",
-          "theme.bar.buttons.modules.kbLayout.icon": "${nature}",
-          "theme.bar.buttons.modules.ram.icon_background": "${sunflower}",
-          "theme.bar.menus.menu.power.buttons.shutdown.icon_background": "${warm}",
-          "theme.bar.menus.menu.power.buttons.shutdown.text": "${warm}",
-          "theme.bar.menus.menu.power.buttons.sleep.background": "${background-alt}",
-          "theme.bar.buttons.modules.ram.text": "${sunflower}",
-          "theme.bar.menus.menu.power.buttons.logout.text": "${nature}",
-          "theme.bar.buttons.modules.updates.icon_background": "${ocean}",
-          "theme.bar.buttons.modules.kbLayout.background": "${background-alt}",
-          "theme.bar.buttons.modules.power.background": "${background-alt}",
-          "theme.bar.buttons.modules.weather.background": "${background-alt}",
-          "theme.bar.buttons.icon_background": "${background-alt}",
-          "theme.bar.menus.menu.power.background.color": "${background}",
-          "theme.bar.buttons.modules.ram.background": "${background-alt}",
-          "theme.bar.buttons.modules.netstat.icon": "${nature}",
-          "theme.bar.buttons.windowtitle.icon_background": "${accent}",
-          "theme.bar.buttons.modules.cpu.icon_background": "${warm}",
-          "theme.bar.menus.menu.power.buttons.logout.icon_background": "${nature}",
-          "theme.bar.buttons.modules.updates.text": "${ocean}",
-          "theme.bar.menus.menu.power.buttons.sleep.icon": "${background-alt}",
-          "theme.bar.buttons.bluetooth.icon_background": "${nature}",
-          "theme.bar.menus.menu.power.buttons.restart.background": "${background-alt}",
-          "theme.bar.buttons.modules.updates.icon": "${ocean}",
-          "theme.bar.buttons.modules.cpu.text": "${warm}",
-          "theme.bar.buttons.modules.netstat.icon_background": "${nature}",
-          "theme.bar.buttons.modules.kbLayout.text": "${nature}",
-          "theme.bar.buttons.notifications.icon_background": "${accent}",
-          "theme.bar.buttons.modules.power.border": "${warm}",
-          "theme.bar.buttons.modules.weather.border": "${accent}",
-          "theme.bar.buttons.modules.updates.border": "${ocean}",
-          "theme.bar.buttons.modules.kbLayout.border": "${nature}",
-          "theme.bar.buttons.modules.netstat.border": "${nature}",
-          "theme.bar.buttons.modules.storage.border": "${warm}",
-          "theme.bar.buttons.modules.cpu.border": "${warm}",
-          "theme.bar.buttons.modules.ram.border": "${sunflower}",
-          "theme.bar.buttons.notifications.border": "${accent}",
-          "theme.bar.buttons.clock.border": "${accent}",
-          "theme.bar.buttons.battery.border": "${sunflower}",
-          "theme.bar.buttons.systray.border": "${background-alt-2}",
-          "theme.bar.buttons.bluetooth.border": "${nature}",
-          "theme.bar.buttons.network.border": "${accent}",
-          "theme.bar.buttons.volume.border": "${warm}",
-          "theme.bar.buttons.media.border": "${accent}",
-          "theme.bar.buttons.windowtitle.border": "${accent}",
-          "theme.bar.buttons.workspaces.border": "${background-alt}",
-          "theme.bar.buttons.dashboard.border": "${sunflower}",
-          "theme.bar.buttons.modules.submap.background": "${background-alt}",
-          "theme.bar.buttons.modules.submap.text": "${nature}",
-          "theme.bar.buttons.modules.submap.border": "${nature}",
-          "theme.bar.buttons.modules.submap.icon": "${nature}",
-          "theme.bar.buttons.modules.submap.icon_background": "${background-alt}",
-          "theme.bar.menus.menu.network.switch.enabled": "${accent}",
-          "theme.bar.menus.menu.network.switch.disabled": "${background-alt}",
-          "theme.bar.menus.menu.network.switch.puck": "${background-alt-2}",
-          "theme.bar.buttons.systray.customIcon": "${grey}",
-          "theme.bar.border.color": "${accent}",
-          "theme.bar.menus.menu.media.timestamp": "${grey}",
-          "theme.bar.buttons.borderColor": "${accent}",
-          "theme.bar.buttons.modules.hyprsunset.icon": "${sunflower}",
-          "theme.bar.buttons.modules.hyprsunset.background": "${background-alt}",
-          "theme.bar.buttons.modules.hyprsunset.icon_background": "${sunflower}",
-          "theme.bar.buttons.modules.hyprsunset.text": "${sunflower}",
-          "theme.bar.buttons.modules.hyprsunset.border": "${sunflower}",
-          "theme.bar.buttons.modules.hypridle.icon": "${warm}",
-          "theme.bar.buttons.modules.hypridle.background": "${background-alt}",
-          "theme.bar.buttons.modules.hypridle.icon_background": "${warm}",
-          "theme.bar.buttons.modules.hypridle.text": "${warm}",
-          "theme.bar.buttons.modules.hypridle.border": "${warm}"
-        }
-      '';
-
-    # home.file.".cache/ags/hyprpanel/options.json" = {
-    #   text = # json
-    #     ''
-    #        {
-    #          "bar.layouts": {
-    #            "0": {
-    #              "left": [
-    #                "dashboard",
-    #                "workspaces",
-    #                "windowtitle"
-    #              ],
-    #              "middle": [
-    #                "media"
-    #              ],
-    #              "right": [
-    #                "systray",
-    #                "volume",
-    #                "bluetooth",
-    #                "battery",
-    #                "network",
-    #                "clock",
-    #                "notifications"
-    #              ]
-    #            },
-    #            "1": {
-    #              "left": [
-    #                "dashboard",
-    #                "workspaces",
-    #                "windowtitle"
-    #              ],
-    #              "middle": [
-    #                "media"
-    #              ],
-    #              "right": [
-    #                "systray",
-    #                "volume",
-    #                "bluetooth",
-    #                "battery",
-    #                "network",
-    #                "clock",
-    #                "notifications"
-    #              ]
-    #            },
-    #            "2": {
-    #              "left": [
-    #                "dashboard",
-    #                "workspaces",
-    #                "windowtitle"
-    #              ],
-    #              "middle": [
-    #                "media"
-    #              ],
-    #              "right": [
-    #                "systray",
-    #                "volume",
-    #                "bluetooth",
-    #                "battery",
-    #                "network",
-    #                "clock",
-    #                "notifications"
-    #              ]
-    #
-    #          },
-    #          "theme.font.name": "${font}",
-    #          "theme.font.size": "${fontSize}px",
-    #          "theme.bar.outer_spacing": "${
-    #            if floating && transparent then "0" else "8"
-    #          }px",
-    #          "theme.bar.buttons.y_margins": "${
-    #            if floating && transparent then "0" else "8"
-    #          }px",
-    #          "theme.bar.buttons.spacing": "0.3em",
-    #          "theme.bar.buttons.radius": "${
-    #            if transparent then toString rounding else toString (rounding - 8)
-    #          }px",
-    #          "theme.bar.floating": ${if floating then "true" else "false"},
-    #          "theme.bar.buttons.padding_x": "0.8rem",
-    #          "theme.bar.buttons.padding_y": "0.4rem",
-    #          "theme.bar.margin_top": "${
-    #            if position == "top" then toString (gaps-in * 2) else "0"
-    #          }px",
-    #          "theme.bar.margin_bottom": "${
-    #            if position == "top" then "0" else toString (gaps-in * 2)
-    #          }px",
-    #          "theme.bar.margin_sides": "${toString gaps-out}px",
-    #          "theme.bar.border_radius": "${toString rounding}px",
-    #          "bar.launcher.icon": "",
-    #          "theme.bar.transparent": ${if transparent then "true" else "false"},
-    #          "bar.workspaces.show_numbered": false,
-    #          "bar.workspaces.workspaces": 5,
-    #          "bar.workspaces.monitorSpecific": true,
-    #          "bar.workspaces.hideUnoccupied": false,
-    #          "bar.windowtitle.label": true,
-    #          "bar.volume.label": false,
-    #          "bar.network.truncation_size": 12,
-    #          "bar.bluetooth.label": false,
-    #          "bar.clock.format": "%a %b %d  %I:%M %p",
-    #          "bar.notifications.show_total": true,
-    #          "theme.notification.border_radius": "${toString rounding}px",
-    #          "theme.osd.enable": true,
-    #          "theme.osd.orientation": "vertical",
-    #          "theme.osd.location": "left",
-    #          "theme.osd.radius": "${toString rounding}px",
-    #          "theme.osd.margins": "0px 0px 0px 10px",
-    #          "theme.osd.muted_zero": true,
-    #          "menus.clock.weather.location": "${location}",
-    #          "menus.clock.weather.key": "myapikey",
-    #          "menus.clock.weather.unit": "metric",
-    #          "menus.dashboard.powermenu.confirmation": false,
-    #          "menus.dashboard.shortcuts.left.shortcut1.icon": "",
-    #          "menus.dashboard.shortcuts.left.shortcut1.command": "qutebrowser",
-    #          "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Qutebrowser",
-    #          "menus.dashboard.shortcuts.left.shortcut2.icon": "󰅶",
-    #          "menus.dashboard.shortcuts.left.shortcut2.command": "caffeine",
-    #          "menus.dashboard.shortcuts.left.shortcut2.tooltip": "Caffeine",
-    #          "menus.dashboard.shortcuts.left.shortcut3.icon": "󰖔",
-    #          "menus.dashboard.shortcuts.left.shortcut3.command": "night-shift",
-    #          "menus.dashboard.shortcuts.left.shortcut3.tooltip": "Night-shift",
-    #          "menus.dashboard.shortcuts.left.shortcut4.icon": "",
-    #          "menus.dashboard.shortcuts.left.shortcut4.command": "menu",
-    #          "menus.dashboard.shortcuts.left.shortcut4.tooltip": "Search Apps",
-    #          "menus.dashboard.shortcuts.right.shortcut1.icon": "",
-    #          "menus.dashboard.shortcuts.right.shortcut1.command": "hyprpicker -a",
-    #          "menus.dashboard.shortcuts.right.shortcut1.tooltip": "Color Picker",
-    #          "menus.dashboard.shortcuts.right.shortcut3.icon": "󰄀",
-    #          "menus.dashboard.shortcuts.right.shortcut3.command": "screenshot region swappy",
-    #          "menus.dashboard.shortcuts.right.shortcut3.tooltip": "Screenshot",
-    #          "menus.dashboard.directories.left.directory1.label": "󰉍 Downloads",
-    #          "menus.dashboard.directories.left.directory1.command": "bash -c \"thunar $HOME/Downloads/\"",
-    #          "menus.dashboard.directories.left.directory2.label": "󰉏 Pictures",
-    #          "menus.dashboard.directories.left.directory2.command": "bash -c \"thunar $HOME/Pictures/\"",
-    #          "menus.dashboard.directories.left.directory3.label": "󱧶 Documents",
-    #          "menus.dashboard.directories.left.directory3.command": "bash -c \"thunar $HOME/Documents/\"",
-    #          "menus.dashboard.directories.right.directory1.label": "󱂵 Home",
-    #          "menus.dashboard.directories.right.directory1.command": "bash -c \"thunar $HOME/\"",
-    #          "menus.dashboard.directories.right.directory2.label": "󰚝 Projects",
-    #          "menus.dashboard.directories.right.directory2.command": "bash -c \"thunar $HOME/dev/\"",
-    #          "menus.dashboard.directories.right.directory3.label": " Config",
-    #          "menus.dashboard.directories.right.directory3.command": "bash -c \"thunar $HOME/.config/\"",
-    #          "theme.dashboard.directories.directory.left.top": "${mild}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.shutdown": "${warm}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.deny": "${warm}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.confirm": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.button_text": "${background}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.body": "${grey}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.label": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.border": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.background": "${background}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.confirmation.card": "${background-alt}",
-    #          "theme.bar.menus.background": "${background}",
-    #          "theme.bar.background": "${background}",
-    #          "theme.bar.buttons.media.icon": "${accent}",
-    #          "theme.bar.buttons.media.text": "${accent}",
-    #          "theme.bar.buttons.icon": "${accent}",
-    #          "theme.bar.buttons.text": "${accent}",
-    #          "theme.bar.buttons.hover": "${background-alt-2}",
-    #          "theme.bar.buttons.background": "${background-alt}",
-    #          "theme.bar.menus.text": "${grey}",
-    #          "theme.bar.menus.border.color": "${background-alt}",
-    #          "theme.bar.buttons.media.background": "${background-alt}",
-    #          "theme.bar.menus.menu.volume.text": "${grey}",
-    #          "theme.bar.menus.menu.volume.card.color": "${background-alt}",
-    #          "theme.bar.menus.menu.volume.label.color": "${warm}",
-    #          "theme.bar.menus.popover.text": "${accent}",
-    #          "theme.bar.menus.popover.background": "${background-alt}",
-    #          "theme.bar.menus.menu.notifications.switch.puck": "${background-alt-2}",
-    #          "theme.bar.menus.menu.notifications.switch.disabled": "${background-alt}",
-    #          "theme.bar.menus.menu.notifications.switch.enabled": "${accent}",
-    #          "theme.bar.menus.menu.notifications.clear": "${warm}",
-    #          "theme.bar.menus.menu.notifications.switch_divider": "${background-alt-2}",
-    #          "theme.bar.menus.menu.notifications.border": "${background-alt}",
-    #          "theme.bar.menus.menu.notifications.card": "${background-alt}",
-    #          "theme.bar.menus.menu.notifications.background": "${background}",
-    #          "theme.bar.menus.menu.notifications.no_notifications_label": "${background-alt}",
-    #          "theme.bar.menus.menu.notifications.label": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.monitors.disk.label": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.monitors.disk.bar": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.monitors.disk.icon": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.monitors.gpu.label": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.monitors.gpu.bar": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.monitors.gpu.icon": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.monitors.ram.label": "${sunflower}",
-    #          "theme.bar.menus.menu.dashboard.monitors.ram.bar": "${sunflower}",
-    #          "theme.bar.menus.menu.dashboard.monitors.ram.icon": "${sunflower}",
-    #          "theme.bar.menus.menu.dashboard.monitors.cpu.label": "${warm}",
-    #          "theme.bar.menus.menu.dashboard.monitors.cpu.bar": "${warm}",
-    #          "theme.bar.menus.menu.dashboard.monitors.cpu.icon": "${warm}",
-    #          "theme.bar.menus.menu.dashboard.monitors.bar_background": "${background-alt-2}",
-    #          "theme.bar.menus.menu.dashboard.directories.right.bottom.color": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.directories.right.middle.color": "${mild}",
-    #          "theme.bar.menus.menu.dashboard.directories.right.top.color": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.directories.left.bottom.color": "${warm}",
-    #          "theme.bar.menus.menu.dashboard.directories.left.middle.color": "${sunflower}",
-    #          "theme.bar.menus.menu.dashboard.directories.left.top.color": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.controls.input.text": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.controls.input.background": "${ocean}",
-    #          "theme.bar.menus.menu.dashboard.controls.volume.text": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.controls.volume.background": "${warm}",
-    #          "theme.bar.menus.menu.dashboard.controls.notifications.text": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.controls.notifications.background": "${sunflower}",
-    #          "theme.bar.menus.menu.dashboard.controls.bluetooth.text": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.controls.bluetooth.background": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.controls.wifi.text": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.controls.wifi.background": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.controls.disabled": "${dark}",
-    #          "theme.bar.menus.menu.dashboard.shortcuts.recording": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.shortcuts.text": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.shortcuts.background": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.sleep": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.logout": "${nature}",
-    #          "theme.bar.menus.menu.dashboard.powermenu.restart": "${sunflower}",
-    #          "theme.bar.menus.menu.dashboard.profile.name": "${accent}",
-    #          "theme.bar.menus.menu.dashboard.border.color": "${background-alt}",
-    #          "theme.bar.menus.menu.dashboard.background.color": "${background}",
-    #          "theme.bar.menus.menu.dashboard.card.color": "${background-alt}",
-    #          "theme.bar.menus.menu.clock.weather.hourly.temperature": "${accent}",
-    #          "theme.bar.menus.menu.clock.weather.hourly.icon": "${accent}",
-    #          "theme.bar.menus.menu.clock.weather.hourly.time": "${accent}",
-    #          "theme.bar.menus.menu.clock.weather.thermometer.extremelycold": "${nature}",
-    #          "theme.bar.menus.menu.clock.weather.thermometer.cold": "${ocean}",
-    #          "theme.bar.menus.menu.clock.weather.thermometer.moderate": "${accent}",
-    #          "theme.bar.menus.menu.clock.weather.thermometer.hot": "${sunflower}",
-    #          "theme.bar.menus.menu.clock.weather.thermometer.extremelyhot": "${warm}",
-    #          "theme.bar.menus.menu.clock.weather.stats": "${accent}",
-    #          "theme.bar.menus.menu.clock.weather.status": "${nature}",
-    #          "theme.bar.menus.menu.clock.weather.temperature": "${grey}",
-    #          "theme.bar.menus.menu.clock.weather.icon": "${accent}",
-    #          "theme.bar.menus.menu.clock.calendar.contextdays": "${dark}",
-    #          "theme.bar.menus.menu.clock.calendar.days": "${grey}",
-    #          "theme.bar.menus.menu.clock.calendar.currentday": "${accent}",
-    #          "theme.bar.menus.menu.clock.calendar.paginator": "${accent}",
-    #          "theme.bar.menus.menu.clock.calendar.weekdays": "${accent}",
-    #          "theme.bar.menus.menu.clock.calendar.yearmonth": "${nature}",
-    #          "theme.bar.menus.menu.clock.time.timeperiod": "${nature}",
-    #          "theme.bar.menus.menu.clock.time.time": "${accent}",
-    #          "theme.bar.menus.menu.clock.text": "${grey}",
-    #          "theme.bar.menus.menu.clock.border.color": "${background-alt}",
-    #          "theme.bar.menus.menu.clock.background.color": "${background}",
-    #          "theme.bar.menus.menu.clock.card.color": "${background-alt}",
-    #          "theme.bar.menus.menu.battery.slider.puck": "${background-alt-2}",
-    #          "theme.bar.menus.menu.battery.slider.backgroundhover": "${background-alt-2}",
-    #          "theme.bar.menus.menu.battery.slider.background": "${dark}",
-    #          "theme.bar.menus.menu.battery.slider.primary": "${sunflower}",
-    #          "theme.bar.menus.menu.battery.icons.active": "${sunflower}",
-    #          "theme.bar.menus.menu.battery.icons.passive": "${dark-grey}",
-    #          "theme.bar.menus.menu.battery.listitems.active": "${sunflower}",
-    #          "theme.bar.menus.menu.battery.listitems.passive": "${grey}",
-    #          "theme.bar.menus.menu.battery.text": "${grey}",
-    #          "theme.bar.menus.menu.battery.label.color": "${sunflower}",
-    #          "theme.bar.menus.menu.battery.border.color": "${background-alt}",
-    #          "theme.bar.menus.menu.battery.background.color": "${background}",
-    #          "theme.bar.menus.menu.battery.card.color": "${background-alt}",
-    #          "theme.bar.menus.menu.systray.dropdownmenu.divider": "${background-alt}",
-    #          "theme.bar.menus.menu.systray.dropdownmenu.text": "${grey}",
-    #          "theme.bar.menus.menu.systray.dropdownmenu.background": "${background}",
-    #          "theme.bar.menus.menu.bluetooth.iconbutton.active": "${nature}",
-    #          "theme.bar.menus.menu.bluetooth.iconbutton.passive": "${grey}",
-    #          "theme.bar.menus.menu.bluetooth.icons.active": "${nature}",
-    #          "theme.bar.menus.menu.bluetooth.icons.passive": "${dark-grey}",
-    #          "theme.bar.menus.menu.bluetooth.listitems.active": "${nature}",
-    #          "theme.bar.menus.menu.bluetooth.listitems.passive": "${grey}",
-    #          "theme.bar.menus.menu.bluetooth.switch.puck": "${background-alt-2}",
-    #          "theme.bar.menus.menu.bluetooth.switch.disabled": "${background-alt}",
-    #          "theme.bar.menus.menu.bluetooth.switch.enabled": "${nature}",
-    #          "theme.bar.menus.menu.bluetooth.switch_divider": "${background-alt-2}",
-    #          "theme.bar.menus.menu.bluetooth.status": "${background-alt-2}",
-    #          "theme.bar.menus.menu.bluetooth.text": "${grey}",
-    #          "theme.bar.menus.menu.bluetooth.label.color": "${nature}",
-    #          "theme.bar.menus.menu.bluetooth.border.color": "${background-alt}",
-    #          "theme.bar.menus.menu.bluetooth.background.color": "${background}",
-    #          "theme.bar.menus.menu.bluetooth.card.color": "${background-alt}",
-    #          "theme.bar.menus.menu.network.iconbuttons.active": "${accent}",
-    #          "theme.bar.menus.menu.network.iconbuttons.passive": "${grey}",
-    #          "theme.bar.menus.menu.network.icons.active": "${accent}",
-    #          "theme.bar.menus.menu.network.icons.passive": "${dark-grey}",
-    #          "theme.bar.menus.menu.network.listitems.active": "${accent}",
-    #          "theme.bar.menus.menu.network.listitems.passive": "${grey}",
-    #          "theme.bar.menus.menu.network.status.color": "${background-alt-2}",
-    #          "theme.bar.menus.menu.network.text": "${grey}",
-    #          "theme.bar.menus.menu.network.label.color": "${accent}",
-    #          "theme.bar.menus.menu.network.border.color": "${background-alt}",
-    #          "theme.bar.menus.menu.network.background.color": "${background}",
-    #          "theme.bar.menus.menu.network.card.color": "${background-alt}",
-    #          "theme.bar.menus.menu.volume.input_slider.puck": "${dark}",
-    #          "theme.bar.menus.menu.volume.input_slider.backgroundhover": "${background-alt-2}",
-    #          "theme.bar.menus.menu.volume.input_slider.background": "${dark}",
-    #          "theme.bar.menus.menu.volume.input_slider.primary": "${warm}",
-    #          "theme.bar.menus.menu.volume.audio_slider.puck": "${dark}",
-    #          "theme.bar.menus.menu.volume.audio_slider.backgroundhover": "${background-alt-2}",
-    #          "theme.bar.menus.menu.volume.audio_slider.background": "${dark}",
-    #          "theme.bar.menus.menu.volume.audio_slider.primary": "${warm}",
-    #          "theme.bar.menus.menu.volume.icons.active": "${warm}",
-    #          "theme.bar.menus.menu.volume.icons.passive": "${dark-grey}",
-    #          "theme.bar.menus.menu.volume.iconbutton.active": "${warm}",
-    #          "theme.bar.menus.menu.volume.iconbutton.passive": "${grey}",
-    #          "theme.bar.menus.menu.volume.listitems.active": "${warm}",
-    #          "theme.bar.menus.menu.volume.listitems.passive": "${grey}",
-    #          "theme.bar.menus.menu.volume.border.color": "${background-alt}",
-    #          "theme.bar.menus.menu.volume.background.color": "${background}",
-    #          "theme.bar.menus.menu.media.slider.puck": "${background-alt-2}",
-    #          "theme.bar.menus.menu.media.slider.backgroundhover": "${background-alt-2}",
-    #          "theme.bar.menus.menu.media.slider.background": "${dark}",
-    #          "theme.bar.menus.menu.media.slider.primary": "${accent}",
-    #          "theme.bar.menus.menu.media.buttons.text": "${background}",
-    #          "theme.bar.menus.menu.media.buttons.background": "${accent}",
-    #          "theme.bar.menus.menu.media.buttons.enabled": "${nature}",
-    #          "theme.bar.menus.menu.media.buttons.inactive": "${dark}",
-    #          "theme.bar.menus.menu.media.border.color": "${background-alt}",
-    #          "theme.bar.menus.menu.media.background.color": "${background}",
-    #          "theme.bar.menus.menu.media.album": "${accent}",
-    #          "theme.bar.menus.menu.media.artist": "${nature}",
-    #          "theme.bar.menus.menu.media.song": "${accent}",
-    #          "theme.bar.menus.tooltip.text": "${grey}",
-    #          "theme.bar.menus.tooltip.background": "${background}",
-    #          "theme.bar.menus.dropdownmenu.divider": "${background-alt}",
-    #          "theme.bar.menus.dropdownmenu.text": "${grey}",
-    #          "theme.bar.menus.dropdownmenu.background": "${background}",
-    #          "theme.bar.menus.slider.puck": "${background-alt-2}",
-    #          "theme.bar.menus.slider.backgroundhover": "${background-alt-2}",
-    #          "theme.bar.menus.slider.background": "${dark}",
-    #          "theme.bar.menus.slider.primary": "${accent}",
-    #          "theme.bar.menus.progressbar.background": "${background-alt-2}",
-    #          "theme.bar.menus.progressbar.foreground": "${accent}",
-    #          "theme.bar.menus.iconbuttons.active": "${accent}",
-    #          "theme.bar.menus.iconbuttons.passive": "${grey}",
-    #          "theme.bar.menus.buttons.text": "${background-alt}",
-    #          "theme.bar.menus.buttons.disabled": "${dark}",
-    #          "theme.bar.menus.buttons.active": "${accent}",
-    #          "theme.bar.menus.buttons.default": "${accent}",
-    #          "theme.bar.menus.switch.puck": "${background-alt-2}",
-    #          "theme.bar.menus.switch.disabled": "${background-alt}",
-    #          "theme.bar.menus.switch.enabled": "${accent}",
-    #          "theme.bar.menus.icons.active": "${accent}",
-    #          "theme.bar.menus.icons.passive": "${dark}",
-    #          "theme.bar.menus.listitems.active": "${accent}",
-    #          "theme.bar.menus.listitems.passive": "${grey}",
-    #          "theme.bar.menus.label": "${accent}",
-    #          "theme.bar.menus.feinttext": "${background-alt}",
-    #          "theme.bar.menus.dimtext": "${dark}",
-    #          "theme.bar.menus.cards": "${background-alt}",
-    #          "theme.bar.buttons.notifications.total": "${accent}",
-    #          "theme.bar.buttons.notifications.icon": "${accent}",
-    #          "theme.bar.buttons.notifications.background": "${background-alt}",
-    #          "theme.bar.buttons.clock.icon": "${accent}",
-    #          "theme.bar.buttons.clock.text": "${accent}",
-    #          "theme.bar.buttons.clock.background": "${background-alt}",
-    #          "theme.bar.buttons.battery.icon": "${sunflower}",
-    #          "theme.bar.buttons.battery.text": "${sunflower}",
-    #          "theme.bar.buttons.battery.background": "${background-alt}",
-    #          "theme.bar.buttons.systray.background": "${background-alt}",
-    #          "theme.bar.buttons.bluetooth.icon": "${nature}",
-    #          "theme.bar.buttons.bluetooth.text": "${nature}",
-    #          "theme.bar.buttons.bluetooth.background": "${background-alt}",
-    #          "theme.bar.buttons.network.icon": "${accent}",
-    #          "theme.bar.buttons.network.text": "${accent}",
-    #          "theme.bar.buttons.network.background": "${background-alt}",
-    #          "theme.bar.buttons.volume.icon": "${warm}",
-    #          "theme.bar.buttons.volume.text": "${warm}",
-    #          "theme.bar.buttons.volume.background": "${background-alt}",
-    #          "theme.bar.buttons.windowtitle.icon": "${accent}",
-    #          "theme.bar.buttons.windowtitle.text": "${accent}",
-    #          "theme.bar.buttons.windowtitle.background": "${background-alt}",
-    #          "theme.bar.buttons.workspaces.active": "${accent}",
-    #          "theme.bar.buttons.workspaces.occupied": "${warm}",
-    #          "theme.bar.buttons.workspaces.available": "${nature}",
-    #          "theme.bar.buttons.workspaces.hover": "${background-alt-2}",
-    #          "theme.bar.buttons.workspaces.background": "${background-alt}",
-    #          "theme.bar.buttons.dashboard.icon": "${sunflower}",
-    #          "theme.bar.buttons.dashboard.background": "${background-alt}",
-    #          "theme.osd.label": "${accent}",
-    #          "theme.osd.icon": "${background}",
-    #          "theme.osd.bar_overflow_color": "${warm}",
-    #          "theme.osd.bar_empty_color": "${background-alt}",
-    #          "theme.osd.bar_color": "${accent}",
-    #          "theme.osd.icon_container": "${accent}",
-    #          "theme.osd.bar_container": "${background}",
-    #          "theme.notification.close_button.label": "${background}",
-    #          "theme.notification.close_button.background": "${warm}",
-    #          "theme.notification.labelicon": "${accent}",
-    #          "theme.notification.text": "${grey}",
-    #          "theme.notification.time": "${dark}",
-    #          "theme.notification.border": "${background-alt}",
-    #          "theme.notification.label": "${accent}",
-    #          "theme.notification.actions.text": "${background-alt}",
-    #          "theme.notification.actions.background": "${accent}",
-    #          "theme.notification.background": "${background-alt}",
-    #          "theme.bar.buttons.workspaces.numbered_active_highlighted_text_color": "${background-alt}",
-    #          "theme.bar.buttons.workspaces.numbered_active_underline_color": "${accent}",
-    #          "theme.bar.menus.menu.media.card.color": "${background-alt}",
-    #          "theme.bar.menus.check_radio_button.background": "${dark-grey}",
-    #          "theme.bar.menus.check_radio_button.active": "${accent}",
-    #          "theme.bar.buttons.style": "default",
-    #          "theme.bar.menus.menu.notifications.pager.button": "${accent}",
-    #          "theme.bar.menus.menu.notifications.scrollbar.color": "${accent}",
-    #          "theme.bar.menus.menu.notifications.pager.label": "${dark-grey}",
-    #          "theme.bar.menus.menu.notifications.pager.background": "${background}",
-    #          "theme.bar.buttons.clock.icon_background": "${accent}",
-    #          "theme.bar.buttons.modules.ram.icon": "${sunflower}",
-    #          "theme.bar.buttons.modules.storage.icon_background": "${warm}",
-    #          "theme.bar.menus.popover.border": "${background-alt}",
-    #          "theme.bar.buttons.volume.icon_background": "${warm}",
-    #          "theme.bar.menus.menu.power.buttons.sleep.icon_background": "${nature}",
-    #          "theme.bar.menus.menu.power.buttons.restart.text": "${sunflower}",
-    #          "theme.bar.buttons.modules.updates.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.storage.icon": "${warm}",
-    #          "theme.bar.buttons.modules.netstat.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.weather.icon": "${accent}",
-    #          "theme.bar.buttons.modules.netstat.text": "${nature}",
-    #          "theme.bar.buttons.modules.storage.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.power.icon": "${warm}",
-    #          "theme.bar.buttons.modules.storage.text": "${warm}",
-    #          "theme.bar.buttons.modules.cpu.background": "${background-alt}",
-    #          "theme.bar.menus.menu.power.border.color": "${background-alt}",
-    #          "theme.bar.buttons.network.icon_background": "${accent}",
-    #          "theme.bar.buttons.modules.power.icon_background": "${warm}",
-    #          "theme.bar.menus.menu.power.buttons.logout.icon": "${background-alt}",
-    #          "theme.bar.menus.menu.power.buttons.restart.icon_background": "${sunflower}",
-    #          "theme.bar.menus.menu.power.buttons.restart.icon": "${background-alt}",
-    #          "theme.bar.buttons.modules.cpu.icon": "${warm}",
-    #          "theme.bar.buttons.battery.icon_background": "${sunflower}",
-    #          "theme.bar.buttons.modules.kbLayout.icon_background": "${nature}",
-    #          "theme.bar.buttons.modules.weather.text": "${accent}",
-    #          "theme.bar.menus.menu.power.buttons.shutdown.icon": "${background-alt}",
-    #          "theme.bar.menus.menu.power.buttons.sleep.text": "${nature}",
-    #          "theme.bar.buttons.modules.weather.icon_background": "${accent}",
-    #          "theme.bar.menus.menu.power.buttons.shutdown.background": "${background-alt}",
-    #          "theme.bar.buttons.media.icon_background": "${accent}",
-    #          "theme.bar.menus.menu.power.buttons.logout.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.kbLayout.icon": "${nature}",
-    #          "theme.bar.buttons.modules.ram.icon_background": "${sunflower}",
-    #          "theme.bar.menus.menu.power.buttons.shutdown.icon_background": "${warm}",
-    #          "theme.bar.menus.menu.power.buttons.shutdown.text": "${warm}",
-    #          "theme.bar.menus.menu.power.buttons.sleep.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.ram.text": "${sunflower}",
-    #          "theme.bar.menus.menu.power.buttons.logout.text": "${nature}",
-    #          "theme.bar.buttons.modules.updates.icon_background": "${ocean}",
-    #          "theme.bar.buttons.modules.kbLayout.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.power.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.weather.background": "${background-alt}",
-    #          "theme.bar.buttons.icon_background": "${background-alt}",
-    #          "theme.bar.menus.menu.power.background.color": "${background}",
-    #          "theme.bar.buttons.modules.ram.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.netstat.icon": "${nature}",
-    #          "theme.bar.buttons.windowtitle.icon_background": "${accent}",
-    #          "theme.bar.buttons.modules.cpu.icon_background": "${warm}",
-    #          "theme.bar.menus.menu.power.buttons.logout.icon_background": "${nature}",
-    #          "theme.bar.buttons.modules.updates.text": "${ocean}",
-    #          "theme.bar.menus.menu.power.buttons.sleep.icon": "${background-alt}",
-    #          "theme.bar.buttons.bluetooth.icon_background": "${nature}",
-    #          "theme.bar.menus.menu.power.buttons.restart.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.updates.icon": "${ocean}",
-    #          "theme.bar.buttons.modules.cpu.text": "${warm}",
-    #          "theme.bar.buttons.modules.netstat.icon_background": "${nature}",
-    #          "theme.bar.buttons.modules.kbLayout.text": "${nature}",
-    #          "theme.bar.buttons.notifications.icon_background": "${accent}",
-    #          "theme.bar.buttons.modules.power.border": "${warm}",
-    #          "theme.bar.buttons.modules.weather.border": "${accent}",
-    #          "theme.bar.buttons.modules.updates.border": "${ocean}",
-    #          "theme.bar.buttons.modules.kbLayout.border": "${nature}",
-    #          "theme.bar.buttons.modules.netstat.border": "${nature}",
-    #          "theme.bar.buttons.modules.storage.border": "${warm}",
-    #          "theme.bar.buttons.modules.cpu.border": "${warm}",
-    #          "theme.bar.buttons.modules.ram.border": "${sunflower}",
-    #          "theme.bar.buttons.notifications.border": "${accent}",
-    #          "theme.bar.buttons.clock.border": "${accent}",
-    #          "theme.bar.buttons.battery.border": "${sunflower}",
-    #          "theme.bar.buttons.systray.border": "${background-alt-2}",
-    #          "theme.bar.buttons.bluetooth.border": "${nature}",
-    #          "theme.bar.buttons.network.border": "${accent}",
-    #          "theme.bar.buttons.volume.border": "${warm}",
-    #          "theme.bar.buttons.media.border": "${accent}",
-    #          "theme.bar.buttons.windowtitle.border": "${accent}",
-    #          "theme.bar.buttons.workspaces.border": "${background-alt}",
-    #          "theme.bar.buttons.dashboard.border": "${sunflower}",
-    #          "theme.bar.buttons.modules.submap.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.submap.text": "${nature}",
-    #          "theme.bar.buttons.modules.submap.border": "${nature}",
-    #          "theme.bar.buttons.modules.submap.icon": "${nature}",
-    #          "theme.bar.buttons.modules.submap.icon_background": "${background-alt}",
-    #          "theme.bar.menus.menu.network.switch.enabled": "${accent}",
-    #          "theme.bar.menus.menu.network.switch.disabled": "${background-alt}",
-    #          "theme.bar.menus.menu.network.switch.puck": "${background-alt-2}",
-    #          "theme.bar.buttons.systray.customIcon": "${grey}",
-    #          "theme.bar.border.color": "${accent}",
-    #          "theme.bar.menus.menu.media.timestamp": "${grey}",
-    #          "theme.bar.buttons.borderColor": "${accent}",
-    #          "theme.bar.buttons.modules.hyprsunset.icon": "${sunflower}",
-    #          "theme.bar.buttons.modules.hyprsunset.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.hyprsunset.icon_background": "${sunflower}",
-    #          "theme.bar.buttons.modules.hyprsunset.text": "${sunflower}",
-    #          "theme.bar.buttons.modules.hyprsunset.border": "${sunflower}",
-    #          "theme.bar.buttons.modules.hypridle.icon": "${warm}",
-    #          "theme.bar.buttons.modules.hypridle.background": "${background-alt}",
-    #          "theme.bar.buttons.modules.hypridle.icon_background": "${warm}",
-    #          "theme.bar.buttons.modules.hypridle.text": "${warm}",
-    #          "theme.bar.buttons.modules.hypridle.border": "${warm}",
-    #          "theme.bar.menus.monochrome": true,
-    #          "wallpaper.enable": false,
-    #          "theme.bar.background": "${
-    #            background + (if transparentButtons then "00" else "")
-    #          }",
-    #         "theme.bar.buttons.background": "${
-    #           (if transparent then background else background-alt)
-    #           + (if transparentButtons then "00" else "")
-    #         }",
-    #          "theme.bar.menus.menu.media.card.tint": 90,
-    #          "bar.customModules.updates.pollingInterval": 1440000,
-    #          "bar.media.show_active_only": true,
-    #          "theme.bar.location": "${position}"
-    #       }
-    #     '';
-    # };
+  programs.hyprpanel ={
+    enable = true;
+    hyprland.enable = true;
+    overlay.enable = true;
+     layout = {
+      "bar.layouts" = {
+        "0" = {
+          "left" = [ "dashboard" "workspaces" "windowtitle" ];
+          "middle" = [ "media" ];
+          "right" = [
+            "volume"
+            "network"
+            "bluetooth"
+            # "battery" # CHANGEME
+            "systray"
+            "clock"
+            "notifications"
+          ];
+        };
+      };
+    };
+    override = {
+      "bar.customModules.updates.pollingInterval"= 1440000;
+      "theme.font.weight"= 600;
+      "theme.bar.scaling"= 80;
+      "theme.bar.menus.menu.media.scaling"= 65;
+      "scalingPriority"= "gdk";
+      "theme.bar.menus.menu.dashboard.scaling"= 80;
+      "theme.osd.scaling"= 80;
+      "theme.bar.menus.menu.notifications.scaling"= 80;
+      "theme.bar.menus.menu.clock.scaling"= 80;
+      "theme.bar.menus.menu.battery.scaling"= 80;
+      "theme.bar.menus.menu.bluetooth.scaling"= 80;
+      "theme.bar.menus.menu.network.scaling"= 80;
+      "theme.bar.menus.menu.dashboard.confirmation_scaling"= 80;
+      "theme.notification.scaling"= 80;
+      "theme.bar.menus.menu.power.scaling"= 80;
+      "theme.tooltip.scaling"= 80;
+      "theme.bar.menus.popover.scaling"= 80;
+      "menus.dashboard.powermenu.avatar.image"= "/home/filip/.profile_picture.png";
+      "bar.launcher.icon"= "";
+      "theme.bar.menus.menu.volume.scaling"= 80;
+      "menus.dashboard.shortcuts.left.shortcut1.icon"= "";
+      "menus.dashboard.shortcuts.left.shortcut1.command"= "firefox";
+      "menus.dashboard.shortcuts.left.shortcut1.tooltip"= "Firefox";
+      "menus.dashboard.shortcuts.left.shortcut2.icon"= "󰅶";
+      "menus.dashboard.shortcuts.left.shortcut2.command"= "caffeine";
+      "menus.dashboard.shortcuts.left.shortcut2.tooltip"= "Caffeine";
+      "menus.dashboard.shortcuts.left.shortcut3.icon"= "󰖔";
+      "menus.dashboard.shortcuts.left.shortcut3.command"= "night-shift";
+      "menus.dashboard.shortcuts.left.shortcut3.tooltip"= "Night-shift";
+      "menus.dashboard.shortcuts.left.shortcut4.icon"= "";
+      "menus.dashboard.shortcuts.left.shortcut4.command"= "menu";
+      "menus.dashboard.shortcuts.left.shortcut4.tooltip"= "Search Apps";
+      "menus.dashboard.shortcuts.right.shortcut1.icon"= "";
+      "menus.dashboard.shortcuts.right.shortcut1.command"= "hyprpicker -a";
+      "menus.dashboard.shortcuts.right.shortcut1.tooltip"= "Color Picker";
+      "menus.dashboard.shortcuts.right.shortcut3.icon"= "󰄀";
+      "menus.dashboard.shortcuts.right.shortcut3.command"= "screenshot region swappy";
+      "menus.dashboard.shortcuts.right.shortcut3.tooltip"= "Screenshot";
+      "menus.dashboard.directories.left.directory1.label"= "󰉍 Downloads";
+      "menus.dashboard.directories.left.directory1.command"= "bash -c \"thunar $HOME/Downloads/\"";
+      "menus.dashboard.directories.left.directory2.label"= "󰉏 Pictures";
+      "menus.dashboard.directories.left.directory2.command"= "bash -c \"thunar $HOME/Pictures/\"";
+      "menus.dashboard.directories.left.directory3.label"= "󱧶 Documents";
+      "menus.dashboard.directories.left.directory3.command"= "bash -c \"thunar $HOME/Documents/\"";
+      "menus.dashboard.directories.right.directory1.label"= "󱂵 Home";
+      "menus.dashboard.directories.right.directory1.command"= "bash -c \"thunar $HOME/\"";
+      "menus.dashboard.directories.right.directory2.label"= "󰚝 Projects";
+      "menus.dashboard.directories.right.directory2.command"= "bash -c \"thunar $HOME/Projects/\"";
+      "menus.dashboard.directories.right.directory3.label"= " Config";
+      "menus.dashboard.directories.right.directory3.command"= "bash -c \"thunar $HOME/.config/\"";
+      "theme.dashboard.directories.directory.left.top"= "#ffcc00";
+      "theme.bar.menus.menu.dashboard.powermenu.shutdown"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.deny"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.confirm"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.button_text"= "#263238";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.body"= "#d5dbe5";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.label"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.border"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.background"= "#263238";
+      "theme.bar.menus.menu.dashboard.powermenu.confirmation.card"= "#2c393f";
+      "theme.bar.menus.background"= "#263238";
+      "theme.bar.background"= "#263238";
+      "theme.bar.buttons.media.icon"= "#89ddff";
+      "theme.bar.buttons.media.text"= "#89ddff";
+      "theme.bar.buttons.icon"= "#89ddff";
+      "theme.bar.buttons.text"= "#89ddff";
+      "theme.bar.buttons.hover"= "#37474f";
+      "theme.bar.buttons.background"= "#2c393f";
+      "theme.bar.menus.text"= "#d5dbe5";
+      "theme.bar.menus.border.color"= "#2c393f";
+      "theme.bar.buttons.media.background"= "#2c393f";
+      "theme.bar.menus.menu.volume.text"= "#d5dbe5";
+      "theme.bar.menus.menu.volume.card.color"= "#2c393f";
+      "theme.bar.menus.menu.volume.label.color"= "#ec5f67";
+      "theme.bar.menus.popover.text"= "#89ddff";
+      "theme.bar.menus.popover.background"= "#2c393f";
+      "theme.bar.menus.menu.notifications.switch.puck"= "#37474f";
+      "theme.bar.menus.menu.notifications.switch.disabled"= "#2c393f";
+      "theme.bar.menus.menu.notifications.switch.enabled"= "#89ddff";
+      "theme.bar.menus.menu.notifications.clear"= "#ec5f67";
+      "theme.bar.menus.menu.notifications.switch_divider"= "#37474f";
+      "theme.bar.menus.menu.notifications.border"= "#2c393f";
+      "theme.bar.menus.menu.notifications.card"= "#2c393f";
+      "theme.bar.menus.menu.notifications.background"= "#263238";
+      "theme.bar.menus.menu.notifications.no_notifications_label"= "#2c393f";
+      "theme.bar.menus.menu.notifications.label"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.monitors.disk.label"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.monitors.disk.bar"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.monitors.disk.icon"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.monitors.gpu.label"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.monitors.gpu.bar"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.monitors.gpu.icon"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.monitors.ram.label"= "#ea9560";
+      "theme.bar.menus.menu.dashboard.monitors.ram.bar"= "#ea9560";
+      "theme.bar.menus.menu.dashboard.monitors.ram.icon"= "#ea9560";
+      "theme.bar.menus.menu.dashboard.monitors.cpu.label"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.monitors.cpu.bar"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.monitors.cpu.icon"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.monitors.bar_background"= "#37474f";
+      "theme.bar.menus.menu.dashboard.directories.right.bottom.color"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.directories.right.middle.color"= "#ffcc00";
+      "theme.bar.menus.menu.dashboard.directories.right.top.color"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.directories.left.bottom.color"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.directories.left.middle.color"= "#ea9560";
+      "theme.bar.menus.menu.dashboard.directories.left.top.color"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.controls.input.text"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.controls.input.background"= "#8bd649";
+      "theme.bar.menus.menu.dashboard.controls.volume.text"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.controls.volume.background"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.controls.notifications.text"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.controls.notifications.background"= "#ea9560";
+      "theme.bar.menus.menu.dashboard.controls.bluetooth.text"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.controls.bluetooth.background"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.controls.wifi.text"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.controls.wifi.background"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.controls.disabled"= "#ec5f67";
+      "theme.bar.menus.menu.dashboard.shortcuts.recording"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.shortcuts.text"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.shortcuts.background"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.powermenu.sleep"= "#80cbc4";
+      "theme.bar.menus.menu.dashboard.powermenu.logout"= "#8bd649";
+      "theme.bar.menus.menu.dashboard.powermenu.restart"= "#ea9560";
+      "theme.bar.menus.menu.dashboard.profile.name"= "#89ddff";
+      "theme.bar.menus.menu.dashboard.border.color"= "#2c393f";
+      "theme.bar.menus.menu.dashboard.background.color"= "#263238";
+      "theme.bar.menus.menu.dashboard.card.color"= "#2c393f";
+      "theme.bar.menus.menu.clock.weather.hourly.temperature"= "#89ddff";
+      "theme.bar.menus.menu.clock.weather.hourly.icon"= "#89ddff";
+      "theme.bar.menus.menu.clock.weather.hourly.time"= "#89ddff";
+      "theme.bar.menus.menu.clock.weather.thermometer.extremelycold"= "#80cbc4";
+      "theme.bar.menus.menu.clock.weather.thermometer.cold"= "#8bd649";
+      "theme.bar.menus.menu.clock.weather.thermometer.moderate"= "#89ddff";
+      "theme.bar.menus.menu.clock.weather.thermometer.hot"= "#ea9560";
+      "theme.bar.menus.menu.clock.weather.thermometer.extremelyhot"= "#ec5f67";
+      "theme.bar.menus.menu.clock.weather.stats"= "#89ddff";
+      "theme.bar.menus.menu.clock.weather.status"= "#80cbc4";
+      "theme.bar.menus.menu.clock.weather.temperature"= "#d5dbe5";
+      "theme.bar.menus.menu.clock.weather.icon"= "#89ddff";
+      "theme.bar.menus.menu.clock.calendar.contextdays"= "#ec5f67";
+      "theme.bar.menus.menu.clock.calendar.days"= "#d5dbe5";
+      "theme.bar.menus.menu.clock.calendar.currentday"= "#89ddff";
+      "theme.bar.menus.menu.clock.calendar.paginator"= "#89ddff";
+      "theme.bar.menus.menu.clock.calendar.weekdays"= "#89ddff";
+      "theme.bar.menus.menu.clock.calendar.yearmonth"= "#80cbc4";
+      "theme.bar.menus.menu.clock.time.timeperiod"= "#80cbc4";
+      "theme.bar.menus.menu.clock.time.time"= "#89ddff";
+      "theme.bar.menus.menu.clock.text"= "#d5dbe5";
+      "theme.bar.menus.menu.clock.border.color"= "#2c393f";
+      "theme.bar.menus.menu.clock.background.color"= "#263238";
+      "theme.bar.menus.menu.clock.card.color"= "#2c393f";
+      "theme.bar.menus.menu.battery.slider.puck"= "#37474f";
+      "theme.bar.menus.menu.battery.slider.backgroundhover"= "#37474f";
+      "theme.bar.menus.menu.battery.slider.background"= "#ec5f67";
+      "theme.bar.menus.menu.battery.slider.primary"= "#ea9560";
+      "theme.bar.menus.menu.battery.icons.active"= "#ea9560";
+      "theme.bar.menus.menu.battery.icons.passive"= "#ffffff";
+      "theme.bar.menus.menu.battery.listitems.active"= "#ea9560";
+      "theme.bar.menus.menu.battery.listitems.passive"= "#d5dbe5";
+      "theme.bar.menus.menu.battery.text"= "#d5dbe5";
+      "theme.bar.menus.menu.battery.label.color"= "#ea9560";
+      "theme.bar.menus.menu.battery.border.color"= "#2c393f";
+      "theme.bar.menus.menu.battery.background.color"= "#263238";
+      "theme.bar.menus.menu.battery.card.color"= "#2c393f";
+      "theme.bar.menus.menu.systray.dropdownmenu.divider"= "#2c393f";
+      "theme.bar.menus.menu.systray.dropdownmenu.text"= "#d5dbe5";
+      "theme.bar.menus.menu.systray.dropdownmenu.background"= "#263238";
+      "theme.bar.menus.menu.bluetooth.iconbutton.active"= "#80cbc4";
+      "theme.bar.menus.menu.bluetooth.iconbutton.passive"= "#d5dbe5";
+      "theme.bar.menus.menu.bluetooth.icons.active"= "#80cbc4";
+      "theme.bar.menus.menu.bluetooth.icons.passive"= "#ffffff";
+      "theme.bar.menus.menu.bluetooth.listitems.active"= "#80cbc4";
+      "theme.bar.menus.menu.bluetooth.listitems.passive"= "#d5dbe5";
+      "theme.bar.menus.menu.bluetooth.switch.puck"= "#37474f";
+      "theme.bar.menus.menu.bluetooth.switch.disabled"= "#2c393f";
+      "theme.bar.menus.menu.bluetooth.switch.enabled"= "#80cbc4";
+      "theme.bar.menus.menu.bluetooth.switch_divider"= "#37474f";
+      "theme.bar.menus.menu.bluetooth.status"= "#37474f";
+      "theme.bar.menus.menu.bluetooth.text"= "#d5dbe5";
+      "theme.bar.menus.menu.bluetooth.label.color"= "#80cbc4";
+      "theme.bar.menus.menu.bluetooth.border.color"= "#2c393f";
+      "theme.bar.menus.menu.bluetooth.background.color"= "#263238";
+      "theme.bar.menus.menu.bluetooth.card.color"= "#2c393f";
+      "theme.bar.menus.menu.network.iconbuttons.active"= "#89ddff";
+      "theme.bar.menus.menu.network.iconbuttons.passive"= "#d5dbe5";
+      "theme.bar.menus.menu.network.icons.active"= "#89ddff";
+      "theme.bar.menus.menu.network.icons.passive"= "#ffffff";
+      "theme.bar.menus.menu.network.listitems.active"= "#89ddff";
+      "theme.bar.menus.menu.network.listitems.passive"= "#d5dbe5";
+      "theme.bar.menus.menu.network.status.color"= "#37474f";
+      "theme.bar.menus.menu.network.text"= "#d5dbe5";
+      "theme.bar.menus.menu.network.label.color"= "#89ddff";
+      "theme.bar.menus.menu.network.border.color"= "#2c393f";
+      "theme.bar.menus.menu.network.background.color"= "#263238";
+      "theme.bar.menus.menu.network.card.color"= "#2c393f";
+      "theme.bar.menus.menu.volume.input_slider.puck"= "#ec5f67";
+      "theme.bar.menus.menu.volume.input_slider.backgroundhover"= "#37474f";
+      "theme.bar.menus.menu.volume.input_slider.background"= "#ec5f67";
+      "theme.bar.menus.menu.volume.input_slider.primary"= "#ec5f67";
+      "theme.bar.menus.menu.volume.audio_slider.puck"= "#ec5f67";
+      "theme.bar.menus.menu.volume.audio_slider.backgroundhover"= "#37474f";
+      "theme.bar.menus.menu.volume.audio_slider.background"= "#ec5f67";
+      "theme.bar.menus.menu.volume.audio_slider.primary"= "#ec5f67";
+      "theme.bar.menus.menu.volume.icons.active"= "#ec5f67";
+      "theme.bar.menus.menu.volume.icons.passive"= "#ffffff";
+      "theme.bar.menus.menu.volume.iconbutton.active"= "#ec5f67";
+      "theme.bar.menus.menu.volume.iconbutton.passive"= "#d5dbe5";
+      "theme.bar.menus.menu.volume.listitems.active"= "#ec5f67";
+      "theme.bar.menus.menu.volume.listitems.passive"= "#d5dbe5";
+      "theme.bar.menus.menu.volume.border.color"= "#2c393f";
+      "theme.bar.menus.menu.volume.background.color"= "#263238";
+      "theme.bar.menus.menu.media.slider.puck"= "#37474f";
+      "theme.bar.menus.menu.media.slider.backgroundhover"= "#37474f";
+      "theme.bar.menus.menu.media.slider.background"= "#ec5f67";
+      "theme.bar.menus.menu.media.slider.primary"= "#89ddff";
+      "theme.bar.menus.menu.media.buttons.text"= "#263238";
+      "theme.bar.menus.menu.media.buttons.background"= "#89ddff";
+      "theme.bar.menus.menu.media.buttons.enabled"= "#80cbc4";
+      "theme.bar.menus.menu.media.buttons.inactive"= "#ec5f67";
+      "theme.bar.menus.menu.media.border.color"= "#2c393f";
+      "theme.bar.menus.menu.media.background.color"= "#263238";
+      "theme.bar.menus.menu.media.album"= "#89ddff";
+      "theme.bar.menus.menu.media.artist"= "#80cbc4";
+      "theme.bar.menus.menu.media.song"= "#89ddff";
+      "theme.bar.menus.tooltip.text"= "#d5dbe5";
+      "theme.bar.menus.tooltip.background"= "#263238";
+      "theme.bar.menus.dropdownmenu.divider"= "#2c393f";
+      "theme.bar.menus.dropdownmenu.text"= "#d5dbe5";
+      "theme.bar.menus.dropdownmenu.background"= "#263238";
+      "theme.bar.menus.slider.puck"= "#37474f";
+      "theme.bar.menus.slider.backgroundhover"= "#37474f";
+      "theme.bar.menus.slider.background"= "#ec5f67";
+      "theme.bar.menus.slider.primary"= "#89ddff";
+      "theme.bar.menus.progressbar.background"= "#37474f";
+      "theme.bar.menus.progressbar.foreground"= "#89ddff";
+      "theme.bar.menus.iconbuttons.active"= "#89ddff";
+      "theme.bar.menus.iconbuttons.passive"= "#d5dbe5";
+      "theme.bar.menus.buttons.text"= "#2c393f";
+      "theme.bar.menus.buttons.disabled"= "#ec5f67";
+      "theme.bar.menus.buttons.active"= "#89ddff";
+      "theme.bar.menus.buttons.default"= "#89ddff";
+      "theme.bar.menus.switch.puck"= "#37474f";
+      "theme.bar.menus.switch.disabled"= "#2c393f";
+      "theme.bar.menus.switch.enabled"= "#89ddff";
+      "theme.bar.menus.icons.active"= "#89ddff";
+      "theme.bar.menus.icons.passive"= "#ec5f67";
+      "theme.bar.menus.listitems.active"= "#89ddff";
+      "theme.bar.menus.listitems.passive"= "#d5dbe5";
+      "theme.bar.menus.label"= "#89ddff";
+      "theme.bar.menus.feinttext"= "#2c393f";
+      "theme.bar.menus.dimtext"= "#ec5f67";
+      "theme.bar.menus.cards"= "#2c393f";
+      "theme.bar.buttons.notifications.total"= "#89ddff";
+      "theme.bar.buttons.notifications.icon"= "#89ddff";
+      "theme.bar.buttons.notifications.background"= "#2c393f";
+      "theme.bar.buttons.clock.icon"= "#89ddff";
+      "theme.bar.buttons.clock.text"= "#89ddff";
+      "theme.bar.buttons.clock.background"= "#2c393f";
+      "theme.bar.buttons.battery.icon"= "#ea9560";
+      "theme.bar.buttons.battery.text"= "#ea9560";
+      "theme.bar.buttons.battery.background"= "#2c393f";
+      "theme.bar.buttons.systray.background"= "#2c393f";
+      "theme.bar.buttons.bluetooth.icon"= "#80cbc4";
+      "theme.bar.buttons.bluetooth.text"= "#80cbc4";
+      "theme.bar.buttons.bluetooth.background"= "#2c393f";
+      "theme.bar.buttons.network.icon"= "#89ddff";
+      "theme.bar.buttons.network.text"= "#89ddff";
+      "theme.bar.buttons.network.background"= "#2c393f";
+      "theme.bar.buttons.volume.icon"= "#ec5f67";
+      "theme.bar.buttons.volume.text"= "#ec5f67";
+      "theme.bar.buttons.volume.background"= "#2c393f";
+      "theme.bar.buttons.windowtitle.icon"= "#89ddff";
+      "theme.bar.buttons.windowtitle.text"= "#89ddff";
+      "theme.bar.buttons.windowtitle.background"= "#2c393f";
+      "theme.bar.buttons.workspaces.active"= "#89ddff";
+      "theme.bar.buttons.workspaces.occupied"= "#80cbc4";
+      "theme.bar.buttons.workspaces.available"= "#80cbc4";
+      "theme.bar.buttons.workspaces.hover"= "#37474f";
+      "theme.bar.buttons.workspaces.background"= "#2c393f";
+      "theme.bar.buttons.dashboard.icon"= "#ea9560";
+      "theme.bar.buttons.dashboard.background"= "#2c393f";
+      "theme.osd.label"= "#89ddff";
+      "theme.osd.icon"= "#263238";
+      "theme.osd.bar_overflow_color"= "#ec5f67";
+      "theme.osd.bar_empty_color"= "#2c393f";
+      "theme.osd.bar_color"= "#89ddff";
+      "theme.osd.icon_container"= "#89ddff";
+      "theme.osd.bar_container"= "#263238";
+      "theme.notification.close_button.label"= "#263238";
+      "theme.notification.close_button.background"= "#ec5f67";
+      "theme.notification.labelicon"= "#89ddff";
+      "theme.notification.text"= "#d5dbe5";
+      "theme.notification.time"= "#ec5f67";
+      "theme.notification.border"= "#2c393f";
+      "theme.notification.label"= "#89ddff";
+      "theme.notification.actions.text"= "#2c393f";
+      "theme.notification.actions.background"= "#89ddff";
+      "theme.notification.background"= "#2c393f";
+      "theme.bar.buttons.workspaces.numbered_active_highlighted_text_color"= "#2c393f";
+      "theme.bar.buttons.workspaces.numbered_active_underline_color"= "#89ddff";
+      "theme.bar.menus.menu.media.card.color"= "#2c393f";
+      "theme.bar.menus.check_radio_button.background"= "#ffffff";
+      "theme.bar.menus.check_radio_button.active"= "#89ddff";
+      "theme.bar.buttons.style"= "default";
+      "theme.bar.menus.menu.notifications.pager.button"= "#89ddff";
+      "theme.bar.menus.menu.notifications.scrollbar.color"= "#89ddff";
+      "theme.bar.menus.menu.notifications.pager.label"= "#ffffff";
+      "theme.bar.menus.menu.notifications.pager.background"= "#263238";
+      "theme.bar.buttons.clock.icon_background"= "#89ddff";
+      "theme.bar.buttons.modules.ram.icon"= "#ea9560";
+      "theme.bar.buttons.modules.storage.icon_background"= "#ec5f67";
+      "theme.bar.menus.popover.border"= "#2c393f";
+      "theme.bar.buttons.volume.icon_background"= "#ec5f67";
+      "theme.bar.menus.menu.power.buttons.sleep.icon_background"= "#80cbc4";
+      "theme.bar.menus.menu.power.buttons.restart.text"= "#ea9560";
+      "theme.bar.buttons.modules.updates.background"= "#2c393f";
+      "theme.bar.buttons.modules.storage.icon"= "#ec5f67";
+      "theme.bar.buttons.modules.netstat.background"= "#2c393f";
+      "theme.bar.buttons.modules.weather.icon"= "#89ddff";
+      "theme.bar.buttons.modules.netstat.text"= "#80cbc4";
+      "theme.bar.buttons.modules.storage.background"= "#2c393f";
+      "theme.bar.buttons.modules.power.icon"= "#ec5f67";
+      "theme.bar.buttons.modules.storage.text"= "#ec5f67";
+      "theme.bar.buttons.modules.cpu.background"= "#2c393f";
+      "theme.bar.menus.menu.power.border.color"= "#2c393f";
+      "theme.bar.buttons.network.icon_background"= "#89ddff";
+      "theme.bar.buttons.modules.power.icon_background"= "#ec5f67";
+      "theme.bar.menus.menu.power.buttons.logout.icon"= "#2c393f";
+      "theme.bar.menus.menu.power.buttons.restart.icon_background"= "#ea9560";
+      "theme.bar.menus.menu.power.buttons.restart.icon"= "#2c393f";
+      "theme.bar.buttons.modules.cpu.icon"= "#ec5f67";
+      "theme.bar.buttons.battery.icon_background"= "#ea9560";
+      "theme.bar.buttons.modules.kbLayout.icon_background"= "#80cbc4";
+      "theme.bar.buttons.modules.weather.text"= "#89ddff";
+      "theme.bar.menus.menu.power.buttons.shutdown.icon"= "#2c393f";
+      "theme.bar.menus.menu.power.buttons.sleep.text"= "#80cbc4";
+      "theme.bar.buttons.modules.weather.icon_background"= "#89ddff";
+      "theme.bar.menus.menu.power.buttons.shutdown.background"= "#2c393f";
+      "theme.bar.buttons.media.icon_background"= "#89ddff";
+      "theme.bar.menus.menu.power.buttons.logout.background"= "#2c393f";
+      "theme.bar.buttons.modules.kbLayout.icon"= "#80cbc4";
+      "theme.bar.buttons.modules.ram.icon_background"= "#ea9560";
+      "theme.bar.menus.menu.power.buttons.shutdown.icon_background"= "#ec5f67";
+      "theme.bar.menus.menu.power.buttons.shutdown.text"= "#ec5f67";
+      "theme.bar.menus.menu.power.buttons.sleep.background"= "#2c393f";
+      "theme.bar.buttons.modules.ram.text"= "#ea9560";
+      "theme.bar.menus.menu.power.buttons.logout.text"= "#80cbc4";
+      "theme.bar.buttons.modules.updates.icon_background"= "#8bd649";
+      "theme.bar.buttons.modules.kbLayout.background"= "#2c393f";
+      "theme.bar.buttons.modules.power.background"= "#2c393f";
+      "theme.bar.buttons.modules.weather.background"= "#2c393f";
+      "theme.bar.buttons.icon_background"= "#2c393f";
+      "theme.bar.menus.menu.power.background.color"= "#263238";
+      "theme.bar.buttons.modules.ram.background"= "#2c393f";
+      "theme.bar.buttons.modules.netstat.icon"= "#80cbc4";
+      "theme.bar.buttons.windowtitle.icon_background"= "#89ddff";
+      "theme.bar.buttons.modules.cpu.icon_background"= "#ec5f67";
+      "theme.bar.menus.menu.power.buttons.logout.icon_background"= "#80cbc4";
+      "theme.bar.buttons.modules.updates.text"= "#8bd649";
+      "theme.bar.menus.menu.power.buttons.sleep.icon"= "#2c393f";
+      "theme.bar.buttons.bluetooth.icon_background"= "#80cbc4";
+      "theme.bar.menus.menu.power.buttons.restart.background"= "#2c393f";
+      "theme.bar.buttons.modules.updates.icon"= "#8bd649";
+      "theme.bar.buttons.modules.cpu.text"= "#ec5f67";
+      "theme.bar.buttons.modules.netstat.icon_background"= "#80cbc4";
+      "theme.bar.buttons.modules.kbLayout.text"= "#80cbc4";
+      "theme.bar.buttons.notifications.icon_background"= "#89ddff";
+      "theme.bar.buttons.modules.power.border"= "#ec5f67";
+      "theme.bar.buttons.modules.weather.border"= "#89ddff";
+      "theme.bar.buttons.modules.updates.border"= "#8bd649";
+      "theme.bar.buttons.modules.kbLayout.border"= "#80cbc4";
+      "theme.bar.buttons.modules.netstat.border"= "#80cbc4";
+      "theme.bar.buttons.modules.storage.border"= "#ec5f67";
+      "theme.bar.buttons.modules.cpu.border"= "#ec5f67";
+      "theme.bar.buttons.modules.ram.border"= "#ea9560";
+      "theme.bar.buttons.notifications.border"= "#89ddff";
+      "theme.bar.buttons.clock.border"= "#89ddff";
+      "theme.bar.buttons.battery.border"= "#ea9560";
+      "theme.bar.buttons.systray.border"= "#37474f";
+      "theme.bar.buttons.bluetooth.border"= "#80cbc4";
+      "theme.bar.buttons.network.border"= "#89ddff";
+      "theme.bar.buttons.volume.border"= "#ec5f67";
+      "theme.bar.buttons.media.border"= "#89ddff";
+      "theme.bar.buttons.windowtitle.border"= "#89ddff";
+      "theme.bar.buttons.workspaces.border"= "#2c393f";
+      "theme.bar.buttons.dashboard.border"= "#ea9560";
+      "theme.bar.buttons.modules.submap.background"= "#2c393f";
+      "theme.bar.buttons.modules.submap.text"= "#80cbc4";
+      "theme.bar.buttons.modules.submap.border"= "#80cbc4";
+      "theme.bar.buttons.modules.submap.icon"= "#80cbc4";
+      "theme.bar.buttons.modules.submap.icon_background"= "#2c393f";
+      "theme.bar.menus.menu.network.switch.enabled"= "#89ddff";
+      "theme.bar.menus.menu.network.switch.disabled"= "#2c393f";
+      "theme.bar.menus.menu.network.switch.puck"= "#37474f";
+      "theme.bar.buttons.systray.customIcon"= "#d5dbe5";
+      "theme.bar.border.color"= "#89ddff";
+      "theme.bar.menus.menu.media.timestamp"= "#d5dbe5";
+      "theme.bar.buttons.borderColor"= "#89ddff";
+      "theme.bar.buttons.modules.hyprsunset.icon"= "#ea9560";
+      "theme.bar.buttons.modules.hyprsunset.background"= "#2c393f";
+      "theme.bar.buttons.modules.hyprsunset.icon_background"= "#ea9560";
+      "theme.bar.buttons.modules.hyprsunset.text"= "#ea9560";
+      "theme.bar.buttons.modules.hyprsunset.border"= "#ea9560";
+      "theme.bar.buttons.modules.hypridle.icon"= "#ec5f67";
+      "theme.bar.buttons.modules.hypridle.background"= "#2c393f";
+      "theme.bar.buttons.modules.hypridle.icon_background"= "#ec5f67";
+      "theme.bar.buttons.modules.hypridle.text"= "#ec5f67";
+      "theme.bar.buttons.modules.hypridle.border"= "#ec5f67";
+    };
   };
 }

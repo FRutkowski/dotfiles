@@ -29,9 +29,9 @@
     ../../nixos/openrazer.nix
 
     #NOTE: CHANGE THEME
-    /home/filip/.config/nixos/themes/stylix/forest-waterfalls.nix
+    /home/filip/.config/nixos/themes/stylix/nixy.nix
 
-    ../../nixos/steam.nix
+    # ../../nixos/steam.nix
     ./hardware-configuration.nix
     ../common/variables.nix
     #/home/filip/.config/nixos/hosts/common/variables.nix
@@ -43,7 +43,6 @@
     8883
     8000
   ];
-  nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ (final: prev: { _7zz = prev._7zz.override { useUasm = true; }; }) ];
   fonts.packages = with pkgs; [
     noto-fonts

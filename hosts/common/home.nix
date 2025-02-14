@@ -37,7 +37,7 @@ in
     ../../home/system/hypridle
     ../../home/system/hyprlock
     ../../home/system/hyprpaper
-    ../../home/system/gtk
+    # ../../home/system/gtk
     ../../home/system/wofi
     ../../home/system/batsignal
     ../../home/system/zathura
@@ -48,12 +48,13 @@ in
     inputs.nix-doom-emacs.hmModule
 
     #NOTE: CHANGE THEME
-    /home/filip/.config/nixos/home/system/hyprpanel/forest-waterfalls.nix
-    /home/filip/.config/nixos/home/programs/nvim/forest-waterfalls.nix
+    /home/filip/.config/nixos/home/system/hyprpanel/nixy.nix
+    /home/filip/.config/nixos/home/programs/nvim/nixy.nix
 
     #./secrets # CHANGEME: You should probably remove this line, this is where I store my secrets
   ];
 
+  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.chromium.enableWideVine = true;
   home = {
     inherit (config.var) username;
@@ -77,7 +78,6 @@ in
       webcord
       seatd
       networkmanagerapplet
-      inputs.zen-browser.packages."${system}".default
 
       # Dev
       go
@@ -120,7 +120,7 @@ in
       # libxc
       # mesa
       vscode
-      jetbrains.idea-ultimate
+      # jetbrains.idea-ultimate
       jetbrains.idea-community-bin
       firefox
       neovide

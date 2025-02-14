@@ -40,11 +40,10 @@
     hyprland.url = "github:hyprwm/Hyprland";
     hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent";
     hyprsunset.url = "github:hyprwm/hyprsunset";
-    #hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    hyprpanel.url = "github:paradoxical-dev/HyprPanel/master";
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    # hyprpanel.url = "github:paradoxical-dev/HyprPanel/master";
     stylix.url = "github:danth/stylix";
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
-    zen-browser.url = "git+https://git.sr.ht/~canasta/zen-browser-flake/"; # updated flake
   };
 
   outputs =

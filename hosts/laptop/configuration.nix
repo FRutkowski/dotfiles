@@ -21,7 +21,9 @@
     ../../nixos/docker.nix
     ../../nixos/openrazer.nix
 
-    ../../themes/stylix/nixy.nix
+    #NOTE: CHANGE THEME
+    /home/filip/.config/nixos/themes/stylix/nixy.nix
+    # ../../themes/stylix/nixy.nix
 
     ./hardware-configuration.nix
     #/home/filip/.config/nixos/hosts/common/variables.nix

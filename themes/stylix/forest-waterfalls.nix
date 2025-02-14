@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{pkgs, inputs, ... }: {
   # imports = [
   #   /home/filip/.config/nixos/home/system/hyprpanel/nixy.nix
   # ];
@@ -15,8 +15,7 @@
 
     fonts = {
       monospace = {
-        package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-        name = "JetBrains Mono Nerd Font";
+        package = pkgs.nerd-fonts.jetbrains-mono;        name = "JetBrains Mono Nerd Font";
       };
       sansSerif = {
         package = inputs.apple-fonts.packages.${pkgs.system}.sf-pro-nerd;
