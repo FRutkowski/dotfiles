@@ -61,7 +61,7 @@ in
     systemd.enable = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 
-    plugins = [ inputs.hyprspace.packages.${pkgs.system}.Hyprspace ];
+    # plugins = [ inputs.hyprspace.packages.${pkgs.system}.Hyprspace ];
 
     settings = {
       "$mod" = "SUPER";

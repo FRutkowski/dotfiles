@@ -78,6 +78,7 @@ in
       webcord
       seatd
       networkmanagerapplet
+      dotnetCorePackages.dotnet_9.sdk
 
       # Dev
       go

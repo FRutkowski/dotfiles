@@ -51,7 +51,7 @@ in {
             "volume"
             "network"
             "bluetooth"
-            # "battery" # CHANGEME
+            "battery" # CHANGEME
             "systray"
             "clock"
             "notifications"
