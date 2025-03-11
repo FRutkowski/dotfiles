@@ -29,9 +29,9 @@
     ../../nixos/openrazer.nix
 
     #NOTE: CHANGE THEME
-    /home/filip/.config/nixos/themes/stylix/nixy.nix
+    /home/filip/.config/nixos/themes/stylix/mountain.nix
 
-    # ../../nixos/steam.nix
+    ../../nixos/steam.nix
     ./hardware-configuration.nix
     ../common/variables.nix
     #/home/filip/.config/nixos/hosts/common/variables.nix
