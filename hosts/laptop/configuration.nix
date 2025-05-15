@@ -22,7 +22,7 @@
     ../../nixos/openrazer.nix
 
     #NOTE: CHANGE THEME
-    /home/filip/.config/nixos/themes/stylix/purple-snow.nix
+    /home/filip/.config/nixos/themes/stylix/woodland.nix
     # ../../themes/stylix/nixy.nix
 
     ./hardware-configuration.nix

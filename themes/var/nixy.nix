@@ -12,7 +12,7 @@
   fetch = "nerdfetch"; # "nerdfetch" | "neofetch" | "pfetch" | "none"
 
   bar = {
-    position = "top"; # "top" | "bottom"
+    position = "bottom"; # "top" | "bottom"
     transparent = true;
     transparentButtons = false;
     floating = true;

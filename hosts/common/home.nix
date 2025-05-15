@@ -48,8 +48,8 @@ in
     inputs.nix-doom-emacs.hmModule
 
     #NOTE: CHANGE THEME
-    /home/filip/.config/nixos/home/system/hyprpanel/mountain.nix
-    /home/filip/.config/nixos/home/programs/nvim/mountain.nix
+    /home/filip/.config/nixos/home/system/hyprpanel/woodland.nix
+    /home/filip/.config/nixos/home/programs/nvim/woodland.nix
 
     #./secrets # CHANGEME: You should probably remove this line, this is where I store my secrets
   ];
@@ -91,6 +91,10 @@ in
       devenv
       typescript
       pciutils
+      rustup
+      trunk
+      texliveFull
+      cargo-wasi
 
       # Utils
       zip
