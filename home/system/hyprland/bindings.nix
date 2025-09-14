@@ -10,6 +10,7 @@
       "$mod,SPACE, exec, menu" # Launcher
       "$mod,C, exec, quickmenu" # Quickmenu
       "$shiftMod,SPACE, exec, hyprfocus-toggle" # Toggle HyprFocus
+      "$mod,V, exec, orientationnext"
       # "$mod,TAB, overview:toggle" # Overview
 
       "$mod,Q, killactive," # Close window

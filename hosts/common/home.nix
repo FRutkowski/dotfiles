@@ -79,6 +79,7 @@ in
       seatd
       networkmanagerapplet
       dotnetCorePackages.dotnet_9.sdk
+      musescore
 
       # Dev
       go
