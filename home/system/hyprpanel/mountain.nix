@@ -1,6 +1,9 @@
 # Hyprpanel is the bar on top of the screen
 # Display informations like workspaces, battery, wifi, ...
-{ inputs, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
+let
+  position = config.var.theme.bar.position;
+in
 {
   imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];
   home.packages = [ pkgs.libnotify ];
@@ -8,25 +11,28 @@
   programs.hyprpanel ={
     enable = true;
     settings = {
-      bar.layouts = {
-        "*" = {
-          left = [ "dashboard" "workspaces" "windowtitle" "cava" ];
-          middle = [ "media" ];
-          right = [
-            "volume"
-            "network"
-            "bluetooth"
-            "battery" # CHANGEME
-            "systray"
-            "clock"
-            "notifications"
-          ];
-        };
+      bar = {
+        layouts = {
+          "*" = {
+            left = [ "dashboard" "workspaces" "windowtitle" "cava" ];
+            middle = [ "media" ];
+            right = [
+              "volume"
+              "network"
+              "bluetooth"
+              "battery" # CHANGEME
+              "systray"
+              "clock"
+              "notifications"
+            ];
+          };
+         };
       };
 
     "bar.customModules.updates.pollingInterval"= 1440000;
     "theme.font.weight"= 600;
     "theme.bar.scaling"= 80;
+    "theme.bar.location"= "${position}";
     "theme.bar.menus.menu.media.scaling"= 65;
     "scalingPriority"= "gdk";
     "theme.bar.menus.menu.dashboard.scaling"= 80;
