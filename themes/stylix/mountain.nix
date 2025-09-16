@@ -36,10 +36,8 @@
 
     polarity = "dark";
     image = pkgs.fetchurl {
-      url =
-        "https://github.com/FRutkowski/wallpapers/blob/main/wallpapers/mountain.png?raw=true";
+      url = "https://github.com/FRutkowski/wallpapers/blob/main/wallpapers/mountain.png?raw=true";
       sha256 = "7h/ngkghbl9HFXaaub0stW6NU+rl+ozqrICNGQj/9c8=";
-
     };
   };
 
