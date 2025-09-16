@@ -92,6 +92,10 @@
       "theme.bar.buttons.text"= "#89ddff";
       "theme.bar.buttons.hover"= "#37474f";
       "theme.bar.buttons.background"= "#2c393f";
+      "theme.bar.buttons.modules.cava.background"= "#2c393f";
+      "theme.bar.buttons.modules.cava.text" = "#89ddff";
+      "theme.bar.buttons.modules.cava.icon" = "#89ddff";
+      "theme.bar.buttons.modules.cava.icon_background" = "#2c393f";
       "theme.bar.menus.text"= "#d5dbe5";
       "theme.bar.menus.border.color"= "#2c393f";
       "theme.bar.buttons.media.background"= "#2c393f";

@@ -2,11 +2,7 @@
 # Display informations like workspaces, battery, wifi, ...
 { inputs, pkgs, config, ... }:
 let
-  transparentButtons = config.var.theme.bar.transparentButtons;
-
   accent = "#${config.lib.stylix.colors.base0A}";
-  accent-alt = "#${config.lib.stylix.colors.base03}";
-  inactive = "#${config.lib.stylix.colors.base04}";
   background = "#${config.lib.stylix.colors.base00}";
   background-alt = "#${config.lib.stylix.colors.base01}";
   background-alt-2 = "#${config.lib.stylix.colors.base02}";
@@ -18,21 +14,6 @@ let
   dark-grey = "#${config.lib.stylix.colors.base07}";
   dark = "#${config.lib.stylix.colors.base0F}";
   sunflower = "#${config.lib.stylix.colors.base09}";
-  foreground = "#${config.lib.stylix.colors.base05}";
-  font = "${config.stylix.fonts.serif.name}";
-  fontSize = "${toString config.stylix.fonts.sizes.desktop}";
-
-  rounding = config.var.theme.rounding;
-  border-size = config.var.theme.border-size;
-
-  gaps-out = config.var.theme.gaps-out;
-  gaps-in = config.var.theme.gaps-in;
-
-  floating = config.var.theme.bar.floating;
-  transparent = config.var.theme.bar.transparent;
-  position = config.var.theme.bar.position;
-
-  location = config.var.location;
   username = config.var.username;
 in {
   imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];
@@ -125,6 +106,10 @@ in {
       "theme.bar.buttons.text"= "${accent}";
       "theme.bar.buttons.hover"= "${background-alt-2}";
       "theme.bar.buttons.background"= "${background-alt}";
+      "theme.bar.buttons.modules.cava.background"= "${background-alt}";
+      "theme.bar.buttons.modules.cava.text" = "${accent}";
+      "theme.bar.buttons.modules.cava.icon" = "${accent}";
+      "theme.bar.buttons.modules.cava.icon_background" = "${background-alt}";
       "theme.bar.menus.text"= "${grey}";
       "theme.bar.menus.border.color"= "${background-alt}";
       "theme.bar.buttons.media.background"= "${background-alt}";
