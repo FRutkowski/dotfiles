@@ -7,26 +7,23 @@
 
   programs.hyprpanel ={
     enable = true;
-    hyprland.enable = true;
-    overlay.enable = true;
-     layout = {
-      "bar.layouts" = {
-        "0" = {
-          "left" = [ "dashboard" "workspaces" "windowtitle" ];
-          "middle" = [ "media" ];
-          "right" = [
+    settings = {
+      bar.layouts = {
+        "*" = {
+          left = [ "dashboard" "workspaces" "windowtitle" "cava" ];
+          middle = [ "media" ];
+          right = [
             "volume"
             "network"
             "bluetooth"
-            # "battery" # CHANGEME
+            "battery" # CHANGEME
             "systray"
             "clock"
             "notifications"
           ];
         };
       };
-    };
-    override = {
+
       "bar.customModules.updates.pollingInterval"= 1440000;
       "theme.font.weight"= 600;
       "theme.bar.scaling"= 80;

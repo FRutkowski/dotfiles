@@ -128,7 +128,7 @@ in
         gaps_in = gaps-in;
         gaps_out = gaps-out;
         border_size = border-size;
-        border_part_of_window = true;
+        # border_part_of_window = true;
         layout = "master";
       };
 
@@ -154,10 +154,6 @@ in
         new_status = true;
         allow_small_split = true;
         mfact = 0.5;
-      };
-
-      gestures = {
-        workspace_swipe = true;
       };
 
       misc = {
@@ -214,9 +210,10 @@ in
     };
 
     extraConfig = ''
-      windowrule = opacity ${kitty-opacity} override,^(kitty)$
-      windowrule = opacity ${kitty-opacity} override,^(code)$
-      windowrule = opacity 0.7 override,^(neovide)$
+      windowrule = opacity ${kitty-opacity} override, class:kitty
+      windowrule = opacity ${kitty-opacity} override, class:code
+      windowrule = opacity 0.7 override, class:neovide
+      gesture = 3, horizontal, workspace
     '';
   };
   systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];

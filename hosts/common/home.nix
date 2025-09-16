@@ -74,7 +74,7 @@ in
       myChromium
       brave
       anydesk
-      libsForQt5.gwenview
+      kdePackages.gwenview
       webcord
       seatd
       networkmanagerapplet
